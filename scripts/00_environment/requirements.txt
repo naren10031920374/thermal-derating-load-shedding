@@ -1,0 +1,22 @@
+# ThermalProject Python dependencies (feature engineering + ML pipeline,
+# scripts/02_feature_engineering through 04_detector_evaluation and
+# 07_closed_loop_validation).
+#
+# Derived from the actual import statements in the delivered pipeline
+# scripts (step41/44/46, build_corrected_phase_targets, etc.), NOT from a
+# pip freeze of the local venv -- device_bash could not reach the venv
+# directly this session. Before trusting this on Great Lakes, diff it
+# against the real environment:
+#
+#   D:\naren\Documents\Thermal_Derating_Work_Handover\ThermalProject\venv\Scripts\python.exe -m pip freeze > requirements_actual.txt
+#
+# and fold in anything missing (exact versions especially -- unpinned here
+# on purpose since the local venv's versions weren't available to check).
+
+numpy
+pandas
+scipy
+scikit-learn
+matplotlib
+joblib
+pyarrow          # parquet read/write (feature engineering steps save .parquet)

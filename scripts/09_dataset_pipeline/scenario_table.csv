@@ -1,0 +1,61 @@
+scenario_id,kind,targets,boundary,n_target,ramp_start_s,ramp_end_s,plateau_w,boundary_low_w,preheat_w,boundary_preheat_w,jitter_frac,stepdown_start_s,stepdown_end_s,recovery_w,boundary_recovery_w,seed,split,spare,note
+S001,triple,A;B;C,L;D,3,882,2824,195000,5100,27000,27000,0.0,,,,,1001,train,False,
+S002,pair,K;L,H;A,2,790,1742,203000,4200,27000,27000,0.0,,,,,1002,train,False,
+S003,single,A,L;B,1,799,2355,196000,3000,27000,27000,0.0,,,,,1003,train,False,
+S004,single,C,B;D,1,655,1412,203000,5000,27000,27000,0.0,,,,,1004,train,False,
+S005,single,K,H;L,1,743,1777,196000,4400,27000,27000,0.0,,,,,1005,train,False,
+S006,single,H,G;K,1,698,1998,177000,4000,27000,27000,0.0,,,,,1006,train,False,
+S007,pair,C;D,B;E,2,689,2381,185000,4500,27000,27000,0.0,,,,,1007,train,False,
+S008,single,D,C;E,1,777,2741,199000,3700,27000,27000,0.0,,,,,1008,train,False,
+S009,pair,D;E,C;F,2,866,1522,183000,3500,27000,27000,0.0,,,,,1009,train,False,
+S010,single,E,D;F,1,893,2278,187000,5400,27000,27000,0.0,,,,,1010,train,False,
+S011,pair,B;C,A;D,2,903,2411,172000,5200,27000,27000,0.0,,,,,1011,train,False,
+S012,triple,C;D;E,B;F,3,822,2964,181000,5200,27000,27000,0.0,,,,,1012,test,False,
+S013,triple,D;E;F,C;G,3,965,2394,192000,4800,27000,27000,0.0,,,,,1013,test,False,
+S014,triple,E;F;G,D;H,3,978,2701,208000,3200,27000,27000,0.0,,,,,1014,test,False,
+S015,single,B,A;C,1,844,2114,170000,3200,27000,27000,0.0,,,,,1015,train,False,
+S016,triple,B;C;D,A;E,3,766,1348,180000,4600,27000,27000,0.0,,,,,1016,train,False,
+S017,pair,E;F,D;G,2,920,2558,209000,3400,27000,27000,0.0,,,,,1017,train,False,
+S018,single,E,D;F,1,925,1824,175000,4400,27000,27000,0.0,,,,,1018,train,False,
+S019,pair,C;D,B;E,2,716,1577,194000,3600,27000,27000,0.0,,,,,1019,test,False,
+S020,pair,A;B,L;C,2,832,1565,206000,4800,27000,27000,0.0,,,,,1020,test,False,
+S021,pair,A;B,L;C,2,973,2775,202000,3900,27000,27000,0.0,,,,,1021,train,False,
+S022,pair,H;K,G;L,2,727,1835,189000,4700,27000,27000,0.0,,,,,1022,train,False,
+S023,triple,F;G;H,E;K,3,935,2075,185000,5700,27000,27000,0.0,,,,,1023,train,False,
+S024,triple,L;A;B,K;C,3,659,2831,178000,5600,27000,27000,0.0,,,,,1024,test,False,
+S025,single,K,H;L,1,948,2790,200000,5500,27000,27000,0.0,,,,,1025,train,False,
+S026,pair,F;G,E;H,2,808,1425,172000,6000,27000,27000,0.0,,,,,1026,train,False,
+S027,pair,L;A,K;B,2,707,1533,190000,4000,27000,27000,0.0,,,,,1027,train,False,
+S028,single,L,K;A,1,611,2686,181000,5800,27000,27000,0.0,,,,,1028,train,False,
+S029,single,H,G;K,1,857,1929,198000,3800,27000,27000,0.0,,,,,1029,train,False,
+S030,single,B,A;C,1,672,2543,207000,4900,27000,27000,0.0,,,,,1030,train,False,
+S031,single,F,E;G,1,995,3019,177000,5400,27000,27000,0.0,,,,,1031,train,False,
+S032,triple,K;L;A,H;B,3,753,2082,187000,4100,27000,27000,0.0,,,,,1032,test,False,
+S033,single,G,F;H,1,626,1169,174000,3700,27000,27000,0.0,,,,,1033,train,False,
+S034,single,C,B;D,1,641,1850,205000,3300,27000,27000,0.0,,,,,1034,test,False,
+S035,pair,G;H,F;K,2,619,2211,191000,5800,27000,27000,0.0,,,,,1035,test,False,
+S036,mild,G;H,F;K,2,891,2137,97000,27000,27000,27000,0.0,,,,,1100,test,False,"mild load, boundary not starved; no collapse expected"
+S037,mild,A;B,L;C,2,751,2506,78000,27000,27000,27000,0.0,,,,,1101,train,False,"mild load, boundary not starved; no collapse expected"
+S038,mild,E;F,D;G,2,939,2874,85000,27000,27000,27000,0.0,,,,,1102,train,False,"mild load, boundary not starved; no collapse expected"
+S039,mild,E,D;F,1,637,2109,72000,27000,27000,27000,0.0,,,,,1103,train,False,"mild load, boundary not starved; no collapse expected"
+S040,mild,C,B;D,1,767,2788,61000,27000,27000,27000,0.0,,,,,1104,train,False,"mild load, boundary not starved; no collapse expected"
+S041,repeat,C,B;D,1,800,2800,200000,3000,27000,27000,0.0,,,,,104,train,False,EXACT repeat of generate_gradual_busC_scenario_v4 (seed 104)
+S042,repeat,C,B;D,1,800,2800,200000,3000,27000,27000,0.0,,,,,1201,train,False,"Bus C v4 recipe, new seed"
+S043,repeat,C,B;D,1,800,2800,200000,3000,27000,27000,0.0,,,,,1202,train,False,"Bus C v4 recipe, new seed"
+S044,repeat,C,B;D,1,800,2800,200000,3000,27000,27000,0.0,,,,,1203,train,False,"Bus C v4 recipe, new seed"
+S045,repeat,G;H;K,F;L,3,800,1400,190000,3000,33000,31000,0.03,3400.0,3700.0,45000.0,27000.0,201,train,False,EXACT repeat of generate_three_bus_collapse_scenario_v1 (seed 201)
+S046,repeat,G;H;K,F;L,3,800,1400,190000,3000,33000,31000,0.03,3400.0,3700.0,45000.0,27000.0,1211,train,False,"G/H/K recipe, new seed"
+S047,repeat,G;H;K,F;L,3,800,1400,190000,3000,33000,31000,0.03,3400.0,3700.0,45000.0,27000.0,1212,train,False,"G/H/K recipe, new seed"
+S048,repeat,F,E;G,1,800,2800,200000,3000,27000,27000,0.0,,,,,1221,train,False,Bus F via the generic single-bus recipe (NOT the original baseline generator)
+S049,repeat,F,E;G,1,800,2800,200000,3000,27000,27000,0.0,,,,,1222,train,False,Bus F via the generic single-bus recipe (NOT the original baseline generator)
+S050,repeat,F,E;G,1,800,2800,200000,3000,27000,27000,0.0,,,,,1223,train,False,Bus F via the generic single-bus recipe (NOT the original baseline generator)
+X01,single,E,D;F,1,751,1515,193000,4400,27000,27000,0.0,,,,,1301,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+X02,single,C,B;D,1,657,2558,200000,3200,27000,27000,0.0,,,,,1302,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+X03,single,A,L;B,1,694,2541,192000,5200,27000,27000,0.0,,,,,1303,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+X04,single,F,E;G,1,763,1768,198000,3600,27000,27000,0.0,,,,,1304,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+X05,pair,E;F,D;G,2,637,1972,216000,4900,27000,27000,0.0,,,,,1305,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+X06,pair,C;D,B;E,2,915,2069,209000,3500,27000,27000,0.0,,,,,1306,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+X07,pair,K;L,H;A,2,806,2309,212000,5800,27000,27000,0.0,,,,,1307,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+X08,triple,F;G;H,E;K,3,868,2505,204000,5400,27000,27000,0.0,,,,,1308,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+X09,triple,H;K;L,G;A,3,990,1650,218000,4100,27000,27000,0.0,,,,,1309,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+X10,triple,E;F;G,D;H,3,928,3054,206000,4600,27000,27000,0.0,,,,,1310,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"

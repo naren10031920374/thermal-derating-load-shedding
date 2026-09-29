@@ -1,0 +1,12 @@
+venv/
+slprj/
+**/slprj/
+model_outputs/
+data/
+data_d/
+large_files_to_copy/
+outputs/
+*.slxc
+*.pkl
+*.mat
+*.parquet
