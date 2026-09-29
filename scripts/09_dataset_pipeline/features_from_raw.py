@@ -209,10 +209,13 @@ def detect_collapse(voltage: pd.Series, threshold: float, min_run: int) -> pd.Se
 EXPECTED_MAX_WARMUP_ROWS = 20
 
 
-def build_features(raw: pd.DataFrame) -> pd.DataFrame:
-    """raw: run_scenario.m output. Returns a table with 'time', the full
-    feature set (all columns the step33 recipe produces), and the per-bus
-    collapsed_<BUS> flags, warm-up rows removed."""
+def build_features(raw: pd.DataFrame, keep_cols=None) -> pd.DataFrame:
+    """raw: run_scenario.m output. Returns a table with 'time', the feature
+    columns, and the per-bus collapsed_<BUS> flags, warm-up rows removed.
+
+    keep_cols: optional list of feature columns to keep. The full recipe makes
+    ~990 columns x 500k rows (several GB); the detector only reads a subset, so
+    pass that subset to keep memory low. The values are unchanged."""
     raw = rename_to_canonical(raw.copy())
     missing = [c for c in BASE_SIGNALS + TARGET_COLUMNS if c not in raw.columns]
     if missing:
@@ -220,6 +223,8 @@ def build_features(raw: pd.DataFrame) -> pd.DataFrame:
                          f"{'...' if len(missing) > 8 else ''}")
 
     feats = add_temporal(add_physics(raw))
+    if keep_cols is not None:
+        feats = feats[list(keep_cols)]
     feats = feats.replace([np.inf, -np.inf], np.nan)
     valid = feats.notna().all(axis=1)
     n_dropped = int((~valid).sum())

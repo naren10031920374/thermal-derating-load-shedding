@@ -154,12 +154,13 @@ def load_raw(scn_dir: Path, scn_id: str) -> pd.DataFrame:
 
 
 def score_scenario(raw: pd.DataFrame, pipeline) -> dict:
-    wide = ffr.build_features(raw)
+    strict = strict_columns()
+    assert len(strict) == 83, f"expected 83 strict-precursor features, got {len(strict)}"
+    needed = sorted({get_local_feature_map(i)[c] for i in range(len(ffr.BUSES)) for c in strict})
+    wide = ffr.build_features(raw, keep_cols=needed)   # only the columns the detector reads
     if SUBSAMPLE_STRIDE > 1:
         wide = wide.iloc[::SUBSAMPLE_STRIDE].reset_index(drop=True)
     t_all = wide["time"].to_numpy()
-    strict = strict_columns()
-    assert len(strict) == 83, f"expected 83 strict-precursor features, got {len(strict)}"
 
     buses = {}
     for bus_idx, bus in enumerate(ffr.BUSES):
