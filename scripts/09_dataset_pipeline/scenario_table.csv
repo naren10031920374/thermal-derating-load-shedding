@@ -59,3 +59,69 @@ X07,pair,K;L,H;A,2,806,2309,212000,5800,27000,27000,0.0,,,,,1307,train,True,"spa
 X08,triple,F;G;H,E;K,3,868,2505,204000,5400,27000,27000,0.0,,,,,1308,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
 X09,triple,H;K;L,G;A,3,990,1650,218000,4100,27000,27000,0.0,,,,,1309,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
 X10,triple,E;F;G,D;H,3,928,3054,206000,4600,27000,27000,0.0,,,,,1310,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+T001,borderline,C,B;D,1,934,2320,144000,4900,27000,27000,0.0,,,,,2001,train,False,"borderline: plateau 125-168 kW, may or may not collapse; fills labels between 0.75 and 1.0"
+T002,single,C,B;D,1,624,2923,181000,5100,27000,27000,0.0,,,,,2002,train,False,
+T003,triple,B;C;D,A;E,3,771,2823,178000,5900,27000,27000,0.0,,,,,2003,train,False,
+T004,pair,D;E,C;F,2,693,2149,211000,3200,27000,27000,0.0,,,,,2004,train,False,
+T005,borderline,D;E;F,C;G,3,589,1231,163000,5400,27000,27000,0.0,,,,,2005,train,False,"borderline: plateau 125-168 kW, may or may not collapse; fills labels between 0.75 and 1.0"
+T006,pair,F;G,E;H,2,948,3163,217000,6400,27000,27000,0.0,,,,,2006,train,False,
+T007,borderline,A;B,L;C,2,628,3091,168000,3600,27000,27000,0.0,,,,,2007,train,False,"borderline: plateau 125-168 kW, may or may not collapse; fills labels between 0.75 and 1.0"
+T008,triple,K;L;A,H;B,3,1028,1788,203000,6200,27000,27000,0.0,,,,,2008,train,False,
+T009,triple,G;H;K,F;L,3,992,2863,193000,3500,27000,27000,0.0,,,,,2009,train,False,
+T010,single,L,K;A,1,678,2266,191000,5600,27000,27000,0.0,,,,,2010,train,False,
+T011,single,A,L;B,1,794,1763,208000,4400,27000,27000,0.0,,,,,2011,train,False,
+T012,single,D,C;E,1,620,2167,190000,4000,27000,27000,0.0,,,,,2012,train,False,
+T013,borderline,H;K,G;L,2,1079,2919,134000,4500,27000,27000,0.0,,,,,2013,train,False,"borderline: plateau 125-168 kW, may or may not collapse; fills labels between 0.75 and 1.0"
+T014,single,D,C;E,1,670,1825,200000,4700,27000,27000,0.0,,,,,2014,train,False,
+T015,triple,F;G;H,E;K,3,568,1670,194000,6000,27000,27000,0.0,,,,,2015,train,False,
+T016,triple,D;E;F,C;G,3,808,1303,213000,4600,27000,27000,0.0,,,,,2016,train,False,
+T017,pair,D;E,C;F,2,827,2168,176000,4900,27000,27000,0.0,,,,,2017,train,False,
+T018,triple,E;F;G,D;H,3,732,2468,184000,3600,27000,27000,0.0,,,,,2018,train,False,
+T019,pair,E;F,D;G,2,865,1516,215000,5800,27000,27000,0.0,,,,,2019,train,False,
+T020,single,G,F;H,1,873,2714,207000,5600,27000,27000,0.0,,,,,2020,train,False,
+T021,borderline,F,E;G,1,846,2873,150000,6100,27000,27000,0.0,,,,,2021,train,False,"borderline: plateau 125-168 kW, may or may not collapse; fills labels between 0.75 and 1.0"
+T022,borderline,H,G;K,1,536,2215,141000,3900,27000,27000,0.0,,,,,2022,train,False,"borderline: plateau 125-168 kW, may or may not collapse; fills labels between 0.75 and 1.0"
+T023,single,E,D;F,1,839,2835,179000,3300,27000,27000,0.0,,,,,2023,train,False,
+T024,single,E,D;F,1,1086,2752,216000,6100,27000,27000,0.0,,,,,2024,train,False,
+T025,borderline,A,L;B,1,750,1350,133000,4100,27000,27000,0.0,,,,,2025,train,False,"borderline: plateau 125-168 kW, may or may not collapse; fills labels between 0.75 and 1.0"
+T026,single,F,E;G,1,722,3293,187000,3400,27000,27000,0.0,,,,,2026,train,False,
+T027,triple,C;D;E,B;F,3,1049,2481,209000,4200,27000,27000,0.0,,,,,2027,train,False,
+T028,pair,L;A,K;B,2,653,3180,206000,3700,27000,27000,0.0,,,,,2028,train,False,
+T029,pair,F;G,E;H,2,753,2674,197000,4300,27000,27000,0.0,,,,,2029,train,False,
+T030,mild,A;B,L;C,2,718,2157,61000,27000,27000,27000,0.0,,,,,2030,train,False,"mild load, boundary not starved; no collapse expected"
+T031,triple,A;B;C,L;D,3,975,1612,196000,5200,27000,27000,0.0,,,,,2031,train,False,
+T032,pair,H;K,G;L,2,912,1817,188000,3800,27000,27000,0.0,,,,,2032,train,False,
+T033,triple,E;F;G,D;H,3,1044,3393,184000,6100,27000,27000,0.0,,,,,2033,train,False,
+T034,mild,D;E,C;F,2,1068,2769,103000,27000,27000,27000,0.0,,,,,2034,train,False,"mild load, boundary not starved; no collapse expected"
+T035,pair,B;C,A;D,2,892,2922,212000,4200,27000,27000,0.0,,,,,2035,train,False,
+T036,pair,A;B,L;C,2,1069,2709,190000,3300,27000,27000,0.0,,,,,2036,train,False,
+T037,pair,G;H,F;K,2,1014,3480,195000,5500,27000,27000,0.0,,,,,2037,train,False,
+T038,mild,C,B;D,1,697,2581,85000,27000,27000,27000,0.0,,,,,2038,train,False,"mild load, boundary not starved; no collapse expected"
+T039,pair,K;L,H;A,2,928,1528,180000,5700,27000,27000,0.0,,,,,2039,train,False,
+T040,pair,K;L,H;A,2,1093,1804,205000,4100,27000,27000,0.0,,,,,2040,train,False,
+T041,mild,L;A,K;B,2,873,2425,72000,27000,27000,27000,0.0,,,,,2041,train,False,"mild load, boundary not starved; no collapse expected"
+T042,triple,L;A;B,K;C,3,987,2054,198000,5200,27000,27000,0.0,,,,,2042,train,False,
+T043,borderline,K;L;A,H;B,3,997,2263,129000,5600,27000,27000,0.0,,,,,2043,train,False,"borderline: plateau 125-168 kW, may or may not collapse; fills labels between 0.75 and 1.0"
+T044,triple,D;E;F,C;G,3,845,1692,192000,4600,27000,27000,0.0,,,,,2044,train,False,
+T045,single,H,G;K,1,597,2990,182000,3000,27000,27000,0.0,,,,,2045,train,False,
+T046,triple,H;K;L,G;A,3,505,2275,187000,5400,27000,27000,0.0,,,,,2046,train,False,
+T047,single,K,H;L,1,963,1859,201000,3900,27000,27000,0.0,,,,,2047,train,False,
+T048,triple,C;D;E,B;F,3,776,2944,218000,5100,27000,27000,0.0,,,,,2048,train,False,
+T049,pair,E;F,D;G,2,528,1892,178000,4800,27000,27000,0.0,,,,,2049,train,False,
+T050,single,F,E;G,1,521,926,212000,4900,27000,27000,0.0,,,,,2050,train,False,
+T051,single,G,F;H,1,709,1221,176000,4400,27000,27000,0.0,,,,,2051,train,False,
+T052,single,B,A;C,1,542,1829,199000,3100,27000,27000,0.0,,,,,2052,train,False,
+T053,borderline,H;K;L,G;A,3,736,3043,157000,6300,27000,27000,0.0,,,,,2053,train,False,"borderline: plateau 125-168 kW, may or may not collapse; fills labels between 0.75 and 1.0"
+T054,pair,F;G,E;H,2,902,1949,209000,5500,27000,27000,0.0,,,,,2054,train,False,
+T055,mild,K,H;L,1,584,2733,77000,27000,27000,27000,0.0,,,,,2055,train,False,"mild load, boundary not starved; no collapse expected"
+T056,pair,C;D,B;E,2,642,1891,202000,6300,27000,27000,0.0,,,,,2056,train,False,
+T057,triple,F;G;H,E;K,3,590,3013,203000,6500,27000,27000,0.0,,,,,2057,train,False,
+T058,borderline,C;D,B;E,2,869,1928,154000,3100,27000,27000,0.0,,,,,2058,train,False,"borderline: plateau 125-168 kW, may or may not collapse; fills labels between 0.75 and 1.0"
+T059,mild,B;C,A;D,2,945,2277,100000,27000,27000,27000,0.0,,,,,2059,train,False,"mild load, boundary not starved; no collapse expected"
+T060,pair,C;D,B;E,2,581,2694,185000,3800,27000,27000,0.0,,,,,2060,train,False,
+Y01,single,G,F;H,1,903,1851,198000,3600,27000,27000,0.0,,,,,2101,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+Y02,single,K,H;L,1,857,2258,214000,5400,27000,27000,0.0,,,,,2102,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+Y03,pair,D;E,C;F,2,690,1394,219000,5300,27000,27000,0.0,,,,,2103,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+Y04,pair,H;K,G;L,2,701,2507,205000,6000,27000,27000,0.0,,,,,2104,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+Y05,triple,L;A;B,K;C,3,502,2960,210000,4400,27000,27000,0.0,,,,,2105,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+Y06,triple,G;H;K,F;L,3,1045,3143,203000,3200,27000,27000,0.0,,,,,2106,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
