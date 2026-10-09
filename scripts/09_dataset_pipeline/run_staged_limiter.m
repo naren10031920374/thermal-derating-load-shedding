@@ -36,6 +36,12 @@ function result = run_staged_limiter(scenario, opts)
 %    caps_csv         default <this folder>/staged_caps.csv  (from make_staged_caps.py)
 %    cap_offsets_kw   default [0 -10 -20 -30]
 %    validate         default false
+%    staged           default false. true -> CAUSAL STAGED cap: the cap of every limited bus follows the
+%                     number of buses the detector has flagged SO FAR (and whether E or F is among them),
+%                     read from staged_cap_groups.csv. Without it the cap is the one for the FINAL group.
+%    groups_csv       default <this folder>/staged_cap_groups.csv (used only with staged)
+%    tag              default ''. Adds _<tag> to staged_<ID>_result.json / _iterations.json so runs of
+%                     different policies do not overwrite each other. smoke_test uses tag 'smoke'.
 %    smoke_test       true -> stop time 200 s, one sim, wiring only
 %    tend             stop time, default 5000
 %    output_root      default env DATASET_OUTPUT_ROOT, else <project>/model_outputs/dataset_pipeline
@@ -71,6 +77,11 @@ function result = run_staged_limiter(scenario, opts)
     N_STEPS = round(TEND / TS) + 1;
     OFFSETS = get_opt(opts, 'cap_offsets_kw', [0 -10 -20 -30]);
     do_validate = get_opt(opts, 'validate', false);
+    STAGED = get_opt(opts, 'staged', false);
+    TAG = get_opt(opts, 'tag', '');
+    if smoke && isempty(TAG); TAG = 'smoke'; end
+    SUF = ternary(isempty(TAG), '', ['_' TAG]);
+    GCAP = [];
 
     %% 1. Scenario row, caps, earlier-step outputs ---------------------------
     tbl = readtable(fullfile(SCRIPT_DIR, 'scenario_table.csv'), 'TextType', 'string');
@@ -87,6 +98,20 @@ function result = run_staged_limiter(scenario, opts)
         error('run_staged_limiter:caps', '%s not in %s', id, caps_csv);
     end
     CAP_BASE_KW = double(caps.cap_kw_margin(ci));
+    if STAGED
+        grp_csv = get_opt(opts, 'groups_csv', fullfile(SCRIPT_DIR, 'staged_cap_groups.csv'));
+        if exist(grp_csv, 'file') ~= 2
+            error('run_staged_limiter:groups', 'staged needs %s', grp_csv);
+        end
+        gt = readtable(grp_csv);
+        GCAP = nan(3, 2);      % rows: 1,2,3 flagged buses; columns: no E/F, with E/F
+        for gi = 1:height(gt)
+            GCAP(gt.n_target(gi), gt.has_ef(gi) + 1) = gt.cap_kw_margin(gi);
+        end
+        if any(isnan(GCAP(:)))
+            error('run_staged_limiter:groups', 'staged_cap_groups.csv must cover n_target 1..3 x has_ef 0/1');
+        end
+    end
 
     env_root = getenv('DATASET_OUTPUT_ROOT');
     if isempty(env_root)
@@ -114,13 +139,18 @@ function result = run_staged_limiter(scenario, opts)
     result.scenario_id = id;
     result.kind = row.kind;
     result.policy = 'load limiter: load_used = min(load, cap) after the bus trigger time';
+    if STAGED
+        result.policy = 'causal staged load limiter: cap follows the number of buses flagged so far';
+    end
+    result.staged = STAGED;
+    result.tag = TAG;
 
     if ~any(ct_collapsed)
         % Nothing collapses without shedding. The limiter must also be harmless: run it
         % once on the buses the detector flagged (or none) -- here we only record it.
         fprintf('No bus collapses in the no-shed run: nothing to protect. (Recorded only.)\n');
         result.status = 'no_collapse';
-        write_json(fullfile(OUTPUT_DIR, sprintf('staged_%s_result.json', id)), result);
+        write_json(fullfile(OUTPUT_DIR, sprintf('staged_%s%s_result.json', id, SUF)), result);
         return;
     end
     if exist(trig_json, 'file') ~= 2
@@ -149,6 +179,10 @@ function result = run_staged_limiter(scenario, opts)
     end
     shed_col = cellfun(@(b) find(strcmp(BUS, b)), shed_bus);
     fprintf('Base cap (table value minus margin): %.1f kW per limited bus\n', CAP_BASE_KW);
+    if STAGED
+        fprintf('STAGED mode: cap per flagged-bus group (kW, rows 1-3 buses; cols no E/F | with E/F):\n');
+        disp(GCAP);
+    end
 
     %% 3. Model + load profile ----------------------------------------------
     model_file = get_opt(opts, 'model_file', '');
@@ -185,12 +219,13 @@ function result = run_staged_limiter(scenario, opts)
     result.base_cap_kw = CAP_BASE_KW;
 
     %% 4. Resume cache -------------------------------------------------------
-    iter_path = fullfile(OUTPUT_DIR, sprintf('staged_%s_iterations.json', id));
+    iter_path = fullfile(OUTPUT_DIR, sprintf('staged_%s%s_iterations.json', id, SUF));
     iters = {};
     if exist(iter_path, 'file') == 2 && ~smoke
         prev = jsondecode(fileread(iter_path));
         if isfield(prev, 'trigger_time_by_bus') && isequal(sort(prev.shed_buses(:))', sort(shed_bus(:))') ...
-                && max(abs(prev.trigger_time_by_bus(:)' - trig_time)) < 1e-6
+                && max(abs(prev.trigger_time_by_bus(:)' - trig_time)) < 1e-6 ...
+                && ((~isfield(prev, 'tend') && TEND == 5000) || (isfield(prev, 'tend') && prev.tend == TEND))
             for q = 1:numel(prev.iterations)
                 if iscell(prev.iterations)
                     iters{end+1} = prev.iterations{q}; %#ok<AGROW>
@@ -234,7 +269,7 @@ function result = run_staged_limiter(scenario, opts)
     cap_list = cap_list(cap_list > 5);
     for q = 1:numel(cap_list)
         cap_kw = cap_list(q);
-        lbl = sprintf('limiter_%.1fkW', cap_kw);
+        lbl = sprintf('%s_%.1fkW', ternary(STAGED, 'staged', 'limiter'), cap_kw);
         fprintf('\n--- LIMITER with cap %.1f kW per limited bus ---\n', cap_kw);
         r = run_policy(lbl, cap_kw * 1000, NaN);
         result.cap_tried_kw(end+1) = cap_kw;
@@ -269,7 +304,7 @@ function result = run_staged_limiter(scenario, opts)
         result.status = 'no_safe_cap_tried';
         fprintf('RESULT: none of the tried caps kept all buses alive.\n');
     end
-    write_json(fullfile(OUTPUT_DIR, sprintf('staged_%s_result.json', id)), result);
+    write_json(fullfile(OUTPUT_DIR, sprintf('staged_%s%s_result.json', id, SUF)), result);
     if bdIsLoaded(MODEL_NAME); close_system(MODEL_NAME, 0); end
 
     % ---------------------------------------------------------------------
@@ -288,13 +323,25 @@ function result = run_staged_limiter(scenario, opts)
             end
         end
         load_run = load_hist;
+        cap_series = [];
+        if STAGED && isfinite(cap_w) && isnan(const_frac)
+            ge_t  = time_vec >= trig_time;                       % N x n_shed: bus j flagged by time t
+            n_fl  = max(min(sum(ge_t, 2), 3), 1);
+            ef_fl = any(ge_t(:, ismember(shed_bus, {'E', 'F'})), 2);
+            lin   = sub2ind(size(GCAP), n_fl, double(ef_fl) + 1);
+            cap_series = GCAP(lin) * 1000 + (cap_w - CAP_BASE_KW * 1000);   % W; offset = retry step
+        end
         for kk = 1:n_shed
             idx = time_vec >= trig_time(kk);
             col = shed_col(kk);
             if ~isnan(const_frac)
                 load_run(idx, col) = load_hist(idx, col) * const_frac;
             elseif isfinite(cap_w)
-                load_run(idx, col) = min(load_hist(idx, col), cap_w);
+                if STAGED
+                    load_run(idx, col) = min(load_hist(idx, col), cap_series(idx));
+                else
+                    load_run(idx, col) = min(load_hist(idx, col), cap_w);
+                end
             end
         end
         cut = load_hist(:, shed_col) - load_run(:, shed_col);
@@ -349,7 +396,7 @@ function result = run_staged_limiter(scenario, opts)
                      'first_cut_s', first_cut_s, 'wall_clock_s', wc);
         iters{end+1} = rec;
         s = struct('scenario_id', id, 'shed_buses', {shed_bus}, ...
-                   'trigger_time_by_bus', trig_time, 'bus_order', {BUS}, 'iterations', {iters});
+                   'trigger_time_by_bus', trig_time, 'bus_order', {BUS}, 'iterations', {iters}, 'tend', TEND);
         write_json(iter_path, s);
     end
 end
