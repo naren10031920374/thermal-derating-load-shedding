@@ -21,6 +21,10 @@
 #   CAPS_CSV=file     read the per-scenario caps from this file (in scripts/09_dataset_pipeline), e.g.
 #                     staged_caps_nn.csv for caps predicted by the NN. Use with TAG=nncap.
 #   TAG=name          adds _name to staged_<ID>_result.json and _iterations.json (smoke runs use 'smoke').
+#   MEAS_DELAY=30     measurement test: the limiter sees each bus's load 30 s late (seconds).
+#   MEAS_NOISE=5      measurement test: the limiter sees the load with a 5 % random error (percent).
+#   MEAS_PERIOD=1     sensor sample period in seconds (default 1).  MEAS_SEED=1  noise seed (default 1).
+#                     Use a different TAG for every setting. submit_noise_delay.sh submits the whole set.
 #   Examples:
 #     sbatch --array=12,13,14,19,20,24,32,34,35%3 --export=ALL,STAGED=1,TAG=staged  scripts/09_dataset_pipeline/run_staged_array.sh
 #     sbatch --array=12,13,14,19,20,24,32,34,35%3 --export=ALL,CAPS_CSV=staged_caps_nn.csv,TAG=nncap scripts/09_dataset_pipeline/run_staged_array.sh
@@ -48,6 +52,10 @@ if [ "${VALIDATE:-0}" = "1" ]; then add_opt "'validate', true"; fi
 if [ "${STAGED:-0}" = "1" ];   then add_opt "'staged', true"; fi
 if [ -n "${CAPS_CSV:-}" ];     then add_opt "'caps_csv', '${CAPS_CSV}'"; fi
 if [ -n "${TAG:-}" ];          then add_opt "'tag', '${TAG}'"; fi
+if [ -n "${MEAS_DELAY:-}" ];   then add_opt "'meas_delay_s', ${MEAS_DELAY}"; fi
+if [ -n "${MEAS_NOISE:-}" ];   then add_opt "'meas_noise_pct', ${MEAS_NOISE}"; fi
+if [ -n "${MEAS_PERIOD:-}" ];  then add_opt "'meas_period_s', ${MEAS_PERIOD}"; fi
+if [ -n "${MEAS_SEED:-}" ];    then add_opt "'meas_seed', ${MEAS_SEED}"; fi
 OPTS="struct(${OPTS_LIST})"
 echo "Options: ${OPTS}"
 
