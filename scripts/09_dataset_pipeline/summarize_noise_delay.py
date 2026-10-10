@@ -29,6 +29,15 @@ SETTINGS = [  # tag, label
     ("nd_n10", "noise 10%"),
     ("nd_n5d30", "noise 5% + delay 30 s"),
 ]
+SETTINGS_FILTERED = [  # --filtered: noise runs without and with the 10 s moving average
+    ("staged", "perfect"),
+    ("nd_n5", "noise 5%"),
+    ("nf_n5f10", "noise 5% + avg 10 s"),
+    ("nd_n10", "noise 10%"),
+    ("nf_n10f10", "noise 10% + avg 10 s"),
+    ("nd_n5d30", "n5% + delay 30 s"),
+    ("nf_n5d30f10", "n5%+d30 + avg 10 s"),
+]
 
 
 def load(path):
@@ -93,7 +102,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default=os.path.join("model_outputs", "dataset_pipeline"))
     ap.add_argument("--out", default="noise_delay_summary.csv")
+    ap.add_argument("--filtered", action="store_true", help="compare the noise runs with and without the 10 s average")
     a = ap.parse_args()
+    global SETTINGS
+    if a.filtered:
+        SETTINGS = SETTINGS_FILTERED
+        if a.out == "noise_delay_summary.csv":
+            a.out = "noise_filter_summary.csv"
 
     data = {(s, t): one(a.root, s, t) for s in SCEN for t, _ in SETTINGS}
 

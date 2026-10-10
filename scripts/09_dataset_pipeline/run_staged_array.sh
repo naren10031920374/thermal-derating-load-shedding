@@ -23,6 +23,7 @@
 #   TAG=name          adds _name to staged_<ID>_result.json and _iterations.json (smoke runs use 'smoke').
 #   MEAS_DELAY=30     measurement test: the limiter sees each bus's load 30 s late (seconds).
 #   MEAS_NOISE=5      measurement test: the limiter sees the load with a 5 % random error (percent).
+#   MEAS_FILTER=10    measurement test: the limiter averages the sensor readings of the last 10 s (seconds).
 #   MEAS_PERIOD=1     sensor sample period in seconds (default 1).  MEAS_SEED=1  noise seed (default 1).
 #                     Use a different TAG for every setting. submit_noise_delay.sh submits the whole set.
 #   Examples:
@@ -56,6 +57,7 @@ if [ -n "${MEAS_DELAY:-}" ];   then add_opt "'meas_delay_s', ${MEAS_DELAY}"; fi
 if [ -n "${MEAS_NOISE:-}" ];   then add_opt "'meas_noise_pct', ${MEAS_NOISE}"; fi
 if [ -n "${MEAS_PERIOD:-}" ];  then add_opt "'meas_period_s', ${MEAS_PERIOD}"; fi
 if [ -n "${MEAS_SEED:-}" ];    then add_opt "'meas_seed', ${MEAS_SEED}"; fi
+if [ -n "${MEAS_FILTER:-}" ];  then add_opt "'meas_filter_s', ${MEAS_FILTER}"; fi
 OPTS="struct(${OPTS_LIST})"
 echo "Options: ${OPTS}"
 

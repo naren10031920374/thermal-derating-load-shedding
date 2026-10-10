@@ -49,6 +49,8 @@ function result = run_staged_limiter(scenario, opts)
 %                     a new value for every sensor sample (see meas_period_s). Plant load is NOT noisy.
 %    meas_period_s    default 1. Sensor sample period: the reading is held between samples.
 %    meas_seed        default 1. Seed of the noise (each limited bus gets seed+k, so buses differ).
+%    meas_filter_s    default 0. MEASUREMENT TEST: the limiter averages the readings of the last meas_filter_s seconds
+%                     (a causal moving average, applied after delay and noise). 0 = no filter.
 %                     With any of the above on, the limiter works from the MEASURED load m:
 %                        load_used = load * min(1, cap / m)      (with m = load this equals min(load, cap))
 %                     The true load still drives the plant. Use a different tag for every setting.
@@ -94,7 +96,8 @@ function result = run_staged_limiter(scenario, opts)
     MEAS_N    = get_opt(opts, 'meas_noise_pct', 0);
     MEAS_P    = get_opt(opts, 'meas_period_s', 1);
     MEAS_SEED = get_opt(opts, 'meas_seed', 1);
-    MEAS_ON   = MEAS_D > 0 || MEAS_N > 0;
+    MEAS_F    = get_opt(opts, 'meas_filter_s', 0);
+    MEAS_ON   = MEAS_D > 0 || MEAS_N > 0 || MEAS_F > 0;
 
     %% 1. Scenario row, caps, earlier-step outputs ---------------------------
     tbl = readtable(fullfile(SCRIPT_DIR, 'scenario_table.csv'), 'TextType', 'string');
@@ -161,9 +164,10 @@ function result = run_staged_limiter(scenario, opts)
     result.meas_noise_pct = MEAS_N;
     result.meas_period_s = MEAS_P;
     result.meas_seed = MEAS_SEED;
+    result.meas_filter_s = MEAS_F;
     if MEAS_ON
-        fprintf('MEASUREMENT TEST: limiter sees the load with delay %.1f s, noise %.1f %% (period %.2f s, seed %d)\n', ...
-                MEAS_D, MEAS_N, MEAS_P, MEAS_SEED);
+        fprintf('MEASUREMENT TEST: limiter sees the load with delay %.1f s, noise %.1f %% (period %.2f s, seed %d), moving average %.1f s\n', ...
+                MEAS_D, MEAS_N, MEAS_P, MEAS_SEED, MEAS_F);
     end
 
     if ~any(ct_collapsed)
@@ -248,7 +252,7 @@ function result = run_staged_limiter(scenario, opts)
                 && max(abs(prev.trigger_time_by_bus(:)' - trig_time)) < 1e-6 ...
                 && ((~isfield(prev, 'tend') && TEND == 5000) || (isfield(prev, 'tend') && prev.tend == TEND)) ...
                 && get_opt(prev, 'meas_delay_s', 0) == MEAS_D && get_opt(prev, 'meas_noise_pct', 0) == MEAS_N ...
-                && get_opt(prev, 'meas_period_s', 1) == MEAS_P && get_opt(prev, 'meas_seed', 1) == MEAS_SEED
+                && get_opt(prev, 'meas_period_s', 1) == MEAS_P && get_opt(prev, 'meas_seed', 1) == MEAS_SEED && get_opt(prev, 'meas_filter_s', 0) == MEAS_F
             for q = 1:numel(prev.iterations)
                 if iscell(prev.iterations)
                     iters{end+1} = prev.iterations{q}; %#ok<AGROW>
@@ -367,7 +371,7 @@ function result = run_staged_limiter(scenario, opts)
                     else
                         capv = cap_w * ones(N_STEPS, 1);
                     end
-                    mload = measure_load(load_hist(:, col), MEAS_D, MEAS_N, MEAS_P, MEAS_SEED + kk, TS);
+                    mload = measure_load(load_hist(:, col), MEAS_D, MEAS_N, MEAS_P, MEAS_SEED + kk, TS, MEAS_F);
                     fac = min(1, capv ./ max(mload, 1));
                     load_run(idx, col) = load_hist(idx, col) .* fac(idx);
                 elseif STAGED
@@ -430,7 +434,7 @@ function result = run_staged_limiter(scenario, opts)
         iters{end+1} = rec;
         s = struct('scenario_id', id, 'shed_buses', {shed_bus}, ...
                    'trigger_time_by_bus', trig_time, 'bus_order', {BUS}, 'iterations', {iters}, 'tend', TEND, ...
-                   'meas_delay_s', MEAS_D, 'meas_noise_pct', MEAS_N, 'meas_period_s', MEAS_P, 'meas_seed', MEAS_SEED);
+                   'meas_delay_s', MEAS_D, 'meas_noise_pct', MEAS_N, 'meas_period_s', MEAS_P, 'meas_seed', MEAS_SEED, 'meas_filter_s', MEAS_F);
         write_json(iter_path, s);
     end
 end
@@ -468,10 +472,11 @@ function row = get_row(tbl, scenario)
 end
 
 
-function m = measure_load(x, delay_s, noise_pct, period_s, seed, ts)
+function m = measure_load(x, delay_s, noise_pct, period_s, seed, ts, filter_s)
 % What a sensor would report for the load column x (one value per simulation step ts):
 % a reading is taken every period_s and held until the next one, it arrives delay_s late,
 % and it carries a multiplicative Gaussian error of noise_pct percent (one draw per reading).
+% If filter_s > 0 the limiter then uses the average of the readings of the last filter_s seconds.
     n = numel(x);
     step = max(1, round(period_s / ts));
     dsamp = round(delay_s / ts);
@@ -483,6 +488,12 @@ function m = measure_load(x, delay_s, noise_pct, period_s, seed, ts)
         rs = RandStream('mt19937ar', 'Seed', seed);
         e = randn(rs, nS, 1);
         m = m .* max(0, 1 + (noise_pct / 100) * e((src - 1) / step + 1));
+    end
+    if nargin >= 7 && filter_s > 0
+        L = max(1, round(filter_s / ts));                    % window length in simulation steps
+        cs = [0; cumsum(m)];
+        hi = (1:n)';  lo = max(0, hi - L);
+        m = (cs(hi + 1) - cs(lo + 1)) ./ (hi - lo);          % causal moving average (shorter window at the start)
     end
 end
 
