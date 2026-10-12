@@ -54,6 +54,10 @@ function result = run_staged_limiter(scenario, opts)
 %                     With any of the above on, the limiter works from the MEASURED load m:
 %                        load_used = load * min(1, cap / m)      (with m = load this equals min(load, cap))
 %                     The true load still drives the plant. Use a different tag for every setting.
+%    save_trace       default false. true -> every NEW simulation also writes trace_<ID><_tag>_<label>.csv: per-second
+%                     minimum of every bus voltage (V_<bus>, volts) and, for each limited bus, the mean true load
+%                     (L_true_<bus>_kW) and the load the plant actually got (L_used_<bus>_kW). For figures only.
+%                     Simulations reused from an existing iterations file write no trace: use a fresh tag.
 %    output_root      default env DATASET_OUTPUT_ROOT, else <project>/model_outputs/dataset_pipeline
 %    model_file       override the .slx path
 %  Resumable: every finished simulation is written to staged_<ID>_iterations.json;
@@ -98,6 +102,7 @@ function result = run_staged_limiter(scenario, opts)
     MEAS_SEED = get_opt(opts, 'meas_seed', 1);
     MEAS_F    = get_opt(opts, 'meas_filter_s', 0);
     MEAS_ON   = MEAS_D > 0 || MEAS_N > 0 || MEAS_F > 0;
+    SAVE_TRACE = get_opt(opts, 'save_trace', false);
 
     %% 1. Scenario row, caps, earlier-step outputs ---------------------------
     tbl = readtable(fullfile(SCRIPT_DIR, 'scenario_table.csv'), 'TextType', 'string');
@@ -414,8 +419,14 @@ function result = run_staged_limiter(scenario, opts)
         wc = toc(tsim);
 
         coll = {}; ons = []; mvs = nan(1, NB);
+        n_sec = floor((N_STEPS - 1) * TS);        % whole seconds, for the optional trace file
+        spp   = round(1 / TS);                    % samples per second
+        if SAVE_TRACE; Vtr = nan(n_sec, NB); end
         for bb = 1:NB
             v_full = H.grab_series(so, sprintf('V_Bus_%s', BUS{bb}), TS, N_STEPS);
+            if SAVE_TRACE
+                Vtr(:, bb) = min(reshape(v_full(1:n_sec * spp), spp, n_sec), [], 1).';   % per-second minimum
+            end
             [c, on, mv] = H.detect_collapse_summary(time_vec, v_full, ...
                 COLLAPSE_VOLTAGE_V, MIN_CONSECUTIVE_SAMPLES);
             mvs(bb) = mv;
@@ -432,6 +443,19 @@ function result = run_staged_limiter(scenario, opts)
                      'min_v', mvs, 'shed_kwh', shed_kwh, 'max_cut_pct', max_cut_pct, ...
                      'first_cut_s', first_cut_s, 'wall_clock_s', wc);
         iters{end+1} = rec;
+        if SAVE_TRACE
+            tr = array2table([(0:n_sec-1).', Vtr], 'VariableNames', [{'time_s'}, strcat('V_', BUS)]);
+            for kk = 1:n_shed
+                col = shed_col(kk);
+                lt = mean(reshape(load_hist(1:n_sec * spp, col), spp, n_sec), 1).' / 1000;
+                lu = mean(reshape(load_run(1:n_sec * spp, col),  spp, n_sec), 1).' / 1000;
+                tr.(['L_true_' shed_bus{kk} '_kW']) = lt;
+                tr.(['L_used_' shed_bus{kk} '_kW']) = lu;
+            end
+            trace_path = fullfile(OUTPUT_DIR, sprintf('trace_%s%s_%s.csv', id, SUF, regexprep(label, '[^A-Za-z0-9_.-]', '_')));
+            writetable(tr, trace_path);
+            fprintf('   trace written: %s\n', trace_path);
+        end
         s = struct('scenario_id', id, 'shed_buses', {shed_bus}, ...
                    'trigger_time_by_bus', trig_time, 'bus_order', {BUS}, 'iterations', {iters}, 'tend', TEND, ...
                    'meas_delay_s', MEAS_D, 'meas_noise_pct', MEAS_N, 'meas_period_s', MEAS_P, 'meas_seed', MEAS_SEED, 'meas_filter_s', MEAS_F);

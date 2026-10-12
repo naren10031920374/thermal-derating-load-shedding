@@ -24,6 +24,8 @@
 #   MEAS_DELAY=30     measurement test: the limiter sees each bus's load 30 s late (seconds).
 #   MEAS_NOISE=5      measurement test: the limiter sees the load with a 5 % random error (percent).
 #   MEAS_FILTER=10    measurement test: the limiter averages the sensor readings of the last 10 s (seconds).
+#   SAVE_TRACE=1      also write trace_<ID>_<TAG>_<label>.csv (per-second bus voltages and loads) for figures.
+#                     Use a fresh TAG (the cache of an old tag would skip the simulation and write no trace).
 #   MEAS_PERIOD=1     sensor sample period in seconds (default 1).  MEAS_SEED=1  noise seed (default 1).
 #                     Use a different TAG for every setting. submit_noise_delay.sh submits the whole set.
 #   Examples:
@@ -53,6 +55,7 @@ if [ "${VALIDATE:-0}" = "1" ]; then add_opt "'validate', true"; fi
 if [ "${STAGED:-0}" = "1" ];   then add_opt "'staged', true"; fi
 if [ -n "${CAPS_CSV:-}" ];     then add_opt "'caps_csv', '${CAPS_CSV}'"; fi
 if [ -n "${TAG:-}" ];          then add_opt "'tag', '${TAG}'"; fi
+if [ "${SAVE_TRACE:-0}" = "1" ]; then add_opt "'save_trace', true"; fi
 if [ -n "${MEAS_DELAY:-}" ];   then add_opt "'meas_delay_s', ${MEAS_DELAY}"; fi
 if [ -n "${MEAS_NOISE:-}" ];   then add_opt "'meas_noise_pct', ${MEAS_NOISE}"; fi
 if [ -n "${MEAS_PERIOD:-}" ];  then add_opt "'meas_period_s', ${MEAS_PERIOD}"; fi
