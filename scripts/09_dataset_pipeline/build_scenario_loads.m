@@ -24,6 +24,15 @@ function [load_hist, clip_hi, clip_lo] = build_scenario_loads(row, BUS, n_steps,
 %  When jitter_frac > 0, ONE rand() draw for the target buses happens before
 %  the per-bus randn draws, exactly as in the three-bus script.
 %
+%  OPTIONAL example-profile envelope (scenarios H01.., see profile_scenarios.csv)
+%    If row.profile_file is non-empty, the TARGET buses follow
+%        raw = pre + (plateau*prof(t) - pre) * frac_up + slow_var + noise
+%    where prof(t) is the traced example load shape (fraction of peak) read at
+%    x = row.profile_x0_s + t. During the ramp the load climbs from preheat to the
+%    profile level exactly like the ramp scenarios; after ramp_end it follows the
+%    profile. Boundary and ambient buses are unchanged. No extra random draws, so
+%    every scenario WITHOUT a profile builds exactly the same loads as before.
+%
 %  Inputs
 %    row  struct with fields: targets (cellstr), boundary (cellstr), seed,
 %         ramp_start_s, ramp_end_s, plateau_w, boundary_low_w, preheat_w,
@@ -50,6 +59,20 @@ function [load_hist, clip_hi, clip_lo] = build_scenario_loads(row, BUS, n_steps,
         jitter_by_bus(idx_t) = 1 + row.jitter_frac * (2*rand(1, numel(idx_t)) - 1);
     end
 
+    % Optional example-profile shape (fraction of peak), only for profile scenarios.
+    use_profile = isfield(row, 'profile_file') && ~isempty(row.profile_file);
+    if use_profile
+        if ~isnan(row.stepdown_start_s) || ~isnan(row.stepdown_end_s)
+            error('build_scenario_loads:profileStep', ...
+                  'A profile scenario cannot also have a step-down.');
+        end
+        pf = row.profile_file;
+        if ~isfile(pf); pf = fullfile(fileparts(mfilename('fullpath')), pf); end
+        P    = readtable(pf);                      % columns x_units, power_units (percent of peak)
+        xq   = min(max(row.profile_x0_s + t, P.x_units(1)), P.x_units(end));
+        prof = interp1(P.x_units, P.power_units / 100, xq, 'linear');
+    end
+
     frac_up = min(1, max(0, (t - row.ramp_start_s) / (row.ramp_end_s - row.ramp_start_s)));
     has_step = ~isnan(row.stepdown_start_s) && ~isnan(row.stepdown_end_s);
     if has_step
@@ -71,7 +94,11 @@ function [load_hist, clip_hi, clip_lo] = build_scenario_loads(row, BUS, n_steps,
             ji  = jitter_by_bus(k);
             pre = row.preheat_w  * ji;
             mid = row.plateau_w  * ji;
-            raw = pre + (mid - pre) .* frac_up + slow_var + noise;
+            if use_profile
+                raw = pre + (mid .* prof - pre) .* frac_up + slow_var + noise;
+            else
+                raw = pre + (mid - pre) .* frac_up + slow_var + noise;
+            end
             if has_step
                 rec = row.recovery_w * ji;
                 raw = raw + (rec - mid) .* frac_dn;

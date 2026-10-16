@@ -125,3 +125,6 @@ Y03,pair,D;E,C;F,2,690,1394,219000,5300,27000,27000,0.0,,,,,2103,train,True,"spa
 Y04,pair,H;K,G;L,2,701,2507,205000,6000,27000,27000,0.0,,,,,2104,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
 Y05,triple,L;A;B,K;C,3,502,2960,210000,4400,27000,27000,0.0,,,,,2105,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
 Y06,triple,G;H;K,F;L,3,1045,3143,203000,3200,27000,27000,0.0,,,,,2106,train,True,"spare: higher plateau, swap in if a varied scenario does not collapse"
+H01,single,C,B;D,1,641,1850,205000,3300,27000,27000,0.0,,,,,3001,profile,False,example profile; geometry of S034; x0=11610
+H02,pair,A;B,L;C,2,832,1565,206000,4800,27000,27000,0.0,,,,,3002,profile,False,example profile; geometry of S020; x0=16380
+H03,triple,C;D;E,B;F,3,822,2964,181000,5200,27000,27000,0.0,,,,,3003,profile,False,example profile; geometry of S012; x0=20820

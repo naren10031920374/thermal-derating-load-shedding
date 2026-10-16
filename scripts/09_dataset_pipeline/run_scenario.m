@@ -59,6 +59,7 @@ function summary = run_scenario(scenario, opts)
     %% 1. Read the scenario row -------------------------------------------
     tbl = readtable(fullfile(SCRIPT_DIR, 'scenario_table.csv'), 'TextType', 'string');
     row = get_row(tbl, scenario);
+    row = add_profile_fields(row, SCRIPT_DIR);   % no-op unless listed in profile_scenarios.csv
 
     % Output folder: opts.output_root, else the DATASET_OUTPUT_ROOT environment
     % variable (set it to a /scratch path on Great Lakes to keep large files
