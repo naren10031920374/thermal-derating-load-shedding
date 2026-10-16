@@ -82,6 +82,7 @@ function result = bisect_scenario(scenario, opts)
     %% 1. Scenario row + earlier-step outputs -------------------------------
     tbl = readtable(fullfile(SCRIPT_DIR, 'scenario_table.csv'), 'TextType', 'string');
     row = get_row(tbl, scenario);
+    row = add_profile_fields(row, SCRIPT_DIR);   % no-op unless listed in profile_scenarios.csv
     id  = row.scenario_id;
 
     env_root = getenv('DATASET_OUTPUT_ROOT');
