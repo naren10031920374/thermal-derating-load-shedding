@@ -22,6 +22,9 @@
 #                     staged_caps_nn.csv for caps predicted by the NN. Use with TAG=nncap.
 #   GROUPS_CSV=file   with STAGED=1: read the per-group caps (1-3 buses x E/F or not) from this file in
 #                     scripts/09_dataset_pipeline instead of staged_cap_groups.csv (e.g. staged_cap_groups_nn.csv).
+#   OFFSETS=25:20:15:10:5  which caps to try, as kW added to every cap, most permissive first, colon-separated.
+#                     The run stops at the first cap that keeps all 10 buses alive. Not set = 0:-10:-20:-30 (the retry ladder).
+#                     Positive offsets measure how much room the caps have (slack test). Use a fresh TAG.
 #   TAG=name          adds _name to staged_<ID>_result.json and _iterations.json (smoke runs use 'smoke').
 #   MEAS_DELAY=30     measurement test: the limiter sees each bus's load 30 s late (seconds).
 #   MEAS_NOISE=5      measurement test: the limiter sees the load with a 5 % random error (percent).
@@ -57,6 +60,7 @@ if [ "${VALIDATE:-0}" = "1" ]; then add_opt "'validate', true"; fi
 if [ "${STAGED:-0}" = "1" ];   then add_opt "'staged', true"; fi
 if [ -n "${CAPS_CSV:-}" ];     then add_opt "'caps_csv', '${CAPS_CSV}'"; fi
 if [ -n "${GROUPS_CSV:-}" ];   then add_opt "'groups_csv', '${GROUPS_CSV}'"; fi
+if [ -n "${OFFSETS:-}" ];      then add_opt "'cap_offsets_kw', [${OFFSETS//:/ }]"; fi
 if [ -n "${TAG:-}" ];          then add_opt "'tag', '${TAG}'"; fi
 if [ "${SAVE_TRACE:-0}" = "1" ]; then add_opt "'save_trace', true"; fi
 if [ -n "${MEAS_DELAY:-}" ];   then add_opt "'meas_delay_s', ${MEAS_DELAY}"; fi
