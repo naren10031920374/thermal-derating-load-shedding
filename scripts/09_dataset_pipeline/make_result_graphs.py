@@ -6,6 +6,7 @@ run_staged_limiter.m with save_trace on (see submit_trace_figures.sh). Nothing i
     python3 make_result_graphs.py --dir model_outputs/dataset_pipeline --out result_graphs
 """
 import argparse, glob, os, sys
+import matplotlib, matplotlib.text
 import matplotlib.pyplot as plt
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import make_slide_graphs as g
@@ -32,6 +33,8 @@ FIGS = [
                             ("H04", "tr_n10f0s2", "H04, 10% noise, seed 2, 5 kW margin")]),
     ("r16_profile_margin", [("H09", "tr_n10f0",   "H09, 10% noise, 5 kW margin"),
                             ("H09", "tr_n10fm5",  "H09, 10% noise, 10 kW margin")]),
+    ("r14_delay",          [("H02", "tr_dly0",    "H02, 10% noise, no delay, 5 kW margin"),
+                            ("H02", "tr_dly5s",   "H02, 10% noise, 5 s delay, 5 kW margin")]),
     ("r17_shape",          [("H09", "tr_n10f0",   "H09 (dip in the ramp), 10% noise, 5 kW margin"),
                             ("H10", "tr_n10f0",   "H10 (almost flat), 10% noise, 5 kW margin")]),
 ]
@@ -44,8 +47,17 @@ def fig(d, out, name, panels):
         coll = g.draw_voltage(ax[0, j], df, title, show_ylabel=(j == 0))
         ax[0, j].set_xlabel("")
         if not coll:
-            ax[0, j].text(0.5, 0.12, "all 10 buses stay up", transform=ax[0, j].transAxes, ha="center",
-                          fontsize=13, color=g.BLUE, fontweight="bold")
+            ax[0, j].text(0.5, 0.4, "all 10 buses stay up", transform=ax[0, j].transAxes, ha="center",
+                          fontsize=14, color=g.BLUE, fontweight="bold")
+        elif len(coll) > 1:      # one label for several buses instead of overlapping arrows
+            for t in [t for t in ax[0, j].texts if isinstance(t, matplotlib.text.Annotation)]:
+                t.remove()
+            t0 = df["time_s"].values[-1]
+            first = min(coll.values())
+            names = ", ".join(sorted(coll, key=coll.get))
+            ax[0, j].annotate(f"Buses {names} collapse\nat " + " and ".join(f"{v:,.0f} s" for v in sorted(coll.values())),
+                              xy=(first, 380), xytext=(first - 0.02 * t0, 520), ha="right", fontsize=11, color=g.ORANGE,
+                              arrowprops=dict(arrowstyle="-", color=g.ORANGE, lw=1))
         g.draw_load(ax[1, j], df, show_ylabel=(j == 0))
         print(f"{name}: {title}: " + ("COLLAPSE " + str(coll) if coll else "all up") +
               f"  min V {min(df[c].min() for c in df.columns if c.startswith('V_')):.0f}")
