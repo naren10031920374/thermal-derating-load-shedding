@@ -1,23 +1,35 @@
 """
 MAKE_SCENARIO_TABLE_PROFILE.PY
 ================================================================================
-Appends 3 EXAMPLE-PROFILE scenarios (H01..H03) to scenario_table.csv as rows
-127-129 and writes profile_scenarios.csv (which profile file / start offset each
-one uses).
+Appends 15 EXAMPLE-PROFILE scenarios (H01..H15) to scenario_table.csv as rows
+127-141 and writes profile_scenarios.csv (which profile file / start offset each
+one uses).  H01-H03 are the first three (rows 127-129, unchanged); H04-H15 (rows
+130-141) are the extra reshaped scenarios for the margin test: two per cap cell,
+each with a different piece of the example profile (see SHAPES below).
 
 What these scenarios are
 ------------------------
-Same buses, boundary buses, plateau, ramp start and ramp end as one held-out test
-scenario each (H01 = S034 single C, H02 = S020 pair A;B, H03 = S012 triple C;D;E).
-The difference: after the ramp the target buses do NOT stay on the plateau. They
-follow the shape of the example load profile (example_load_profile_traced.csv,
-traced from Figure 1 of the vendor PDF) with a deep dip to about 43-48 % of peak
-and a recovery. Time scale (1 x-unit = 1 s) and size (100 % = plateau_w) are OUR
+Same buses, boundary buses, plateau, ramp start and ramp end as one existing
+scenario each (H01 = S034 single C, H02 = S020 pair A;B, H03 = S012 triple C;D;E,
+H04.. = the source named in NEW). The difference: the target buses do NOT follow a
+plain ramp + plateau. They follow the shape of the example load profile
+(example_load_profile_traced.csv, traced from Figure 1 of the vendor PDF), read from a
+chosen start x0. Time scale (1 x-unit = 1 s) and size (100 % = plateau_w) are OUR
 assumptions; the PDF gives neither.
+
+Shapes (what the load looks like; the profile has only four real dips, so every shape
+is a different place to start reading it). H04-H15 reach >= 93 % of plateau at the
+end of the ramp (H02 reaches 91 %), so a collapse is still expected:
+  deep-late  H01-H03   deep dip (43-48 %) about 1,300 s after the ramp ends
+  near       H04 H07 H11   deep dip (44 %) starts 0-700 s after the ramp ends
+  shallow    H06 H08 H13 H15   shallow dip (62-66 %) 1,400-2,300 s after the ramp ends
+  in-ramp    H05 H09 H12   deep dip (43 %) in the MIDDLE of the ramp, back to 95 % at ramp end
+  flat       H10 H14   stays above 85 % after the ramp ends (control: almost a plain plateau)
 
 Rules kept from make_scenario_table_extra.py
 --------------------------------------------
   * rows 1-126 (S, X, T, Y) are copied byte for byte, never changed
+  * rows 127-129 (H01-H03) are written exactly as before (same x0, same seed)
   * safe to re-run: it always cuts the table back to 126 rows first
   * split = 'profile', so train_shed_models.py (uses only 'train' / 'test') never
     trains or tests on these rows by accident
@@ -39,6 +51,18 @@ NEW = [
     ("H01", "S034", 3001, 11610, "single bus C; deep dip (44 %) about 1,300 s after the ramp ends"),
     ("H02", "S020", 3002, 16380, "pair A;B; deep dip (48 %) about 1,300 s after the ramp ends"),
     ("H03", "S012", 3003, 20820, "triple C;D;E; deep dip (43 %) about 1,300 s after the ramp ends"),
+    ("H04", "S004", 3004, 12660, "single C; near: deep dip (44 %) 690 s after the ramp ends"),
+    ("H05", "S008", 3005, 2520,  "single D; in-ramp: deep dip (43 %) in the middle of the ramp"),
+    ("H06", "S010", 3006, 24510, "single E; shallow dip (63 %) 1,400 s after the ramp ends"),
+    ("H07", "S031", 3007, 11070, "single F; near: deep dip (44 %) 670 s after the ramp ends"),
+    ("H08", "S002", 3008, 3930,  "pair K;L; shallow dip (62 %) 1,700 s after the ramp ends"),
+    ("H09", "S022", 3009, 3240,  "pair H;K; in-ramp: deep dip (43 %) in the middle of the ramp"),
+    ("H10", "S009", 3010, 19230, "pair D;E; flat: stays above 84 %"),
+    ("H11", "S017", 3011, 11520, "pair E;F; near: deep dip (44 %) 680 s after the ramp ends"),
+    ("H12", "S001", 3012, 2430,  "triple A;B;C; in-ramp: deep dip (43 %) in the middle of the ramp"),
+    ("H13", "S016", 3013, 4140,  "triple B;C;D; shallow dip (62 %) 1,900 s after the ramp ends"),
+    ("H14", "S013", 3014, 9060,  "triple D;E;F; flat: stays above 84 %"),
+    ("H15", "S014", 3015, 9480,  "triple E;F;G; shallow dip (66 %) 2,300 s after the ramp ends"),
 ]
 
 def main():

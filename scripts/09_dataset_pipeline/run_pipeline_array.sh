@@ -12,6 +12,7 @@
 #   sbatch scripts/09_dataset_pipeline/run_pipeline_array.sh                       # rows 1-50, 3 at a time
 #   sbatch --array=1-6%3 scripts/09_dataset_pipeline/run_pipeline_array.sh          # a first small batch
 #   sbatch --array=12,19 scripts/09_dataset_pipeline/run_pipeline_array.sh          # re-run specific rows
+#   sbatch --array=130-141%4 --export=ALL,SKIP_BISECT=1 scripts/09_dataset_pipeline/run_pipeline_array.sh   # steps A+B only
 #
 # Every step skips work that is already done (parquet exists / result json exists),
 # so re-submitting is safe. Concurrency %3 = 3 Simulink sessions at once; raise
@@ -75,6 +76,13 @@ if ! grep -q -i -E ',(1|true),' "$OUT/noshed_${ID}_collapse.csv"; then
 fi
 
 # ---- [C] bisection ---------------------------------------------------------
+# SKIP_BISECT=1 (sbatch --export=ALL,SKIP_BISECT=1 ...) stops here: steps [A] and [B] are all
+# the staged-limiter margin tests need (used for the example-profile scenarios H04-H15).
+if [ "${SKIP_BISECT:-0}" = "1" ]; then
+  echo "SKIP_BISECT=1: bisection skipped for ${ID}."
+  echo "Done: $(date)"
+  exit 0
+fi
 T=$(date +%s)
 matlab -batch "bisect_scenario(${ROW}, struct('verify_monotonic', true))"
 echo "[C] done in $(( $(date +%s) - T )) s"
