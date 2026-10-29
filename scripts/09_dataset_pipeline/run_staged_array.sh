@@ -32,6 +32,8 @@
 #   SAVE_TRACE=1      also write trace_<ID>_<TAG>_<label>.csv (per-second bus voltages and loads) for figures.
 #                     Use a fresh TAG (the cache of an old tag would skip the simulation and write no trace).
 #   MEAS_PERIOD=1     sensor sample period in seconds (default 1).  MEAS_SEED=1  noise seed (default 1).
+#   MEAS_MODE=uniform shape of the random error (default gauss). gauss: MEAS_NOISE is a standard deviation.
+#                     uniform: MEAS_NOISE is a bound, every reading is within +/- MEAS_NOISE percent.
 #                     Use a different TAG for every setting. submit_noise_delay.sh submits the whole set.
 #   Examples:
 #     sbatch --array=12,13,14,19,20,24,32,34,35%3 --export=ALL,STAGED=1,TAG=staged  scripts/09_dataset_pipeline/run_staged_array.sh
@@ -68,6 +70,7 @@ if [ -n "${MEAS_NOISE:-}" ];   then add_opt "'meas_noise_pct', ${MEAS_NOISE}"; f
 if [ -n "${MEAS_PERIOD:-}" ];  then add_opt "'meas_period_s', ${MEAS_PERIOD}"; fi
 if [ -n "${MEAS_SEED:-}" ];    then add_opt "'meas_seed', ${MEAS_SEED}"; fi
 if [ -n "${MEAS_FILTER:-}" ];  then add_opt "'meas_filter_s', ${MEAS_FILTER}"; fi
+if [ -n "${MEAS_MODE:-}" ];    then add_opt "'meas_noise_mode', '${MEAS_MODE}'"; fi
 OPTS="struct(${OPTS_LIST})"
 echo "Options: ${OPTS}"
 
