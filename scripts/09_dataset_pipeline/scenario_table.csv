@@ -140,3 +140,245 @@ H12,triple,A;B;C,L;D,3,882,2824,195000,5100,27000,27000,0.0,,,,,3012,profile,Fal
 H13,triple,B;C;D,A;E,3,766,1348,180000,4600,27000,27000,0.0,,,,,3013,profile,False,example profile; geometry of S016; x0=4140
 H14,triple,D;E;F,C;G,3,965,2394,192000,4800,27000,27000,0.0,,,,,3014,profile,False,example profile; geometry of S013; x0=9060
 H15,triple,E;F;G,D;H,3,978,2701,208000,3200,27000,27000,0.0,,,,,3015,profile,False,example profile; geometry of S014; x0=9480
+RT001,triple,G;H;K,F;L,3,991,3218,191000,4400,27000,27000,0.0,,,,,4001,rtrain,False,random scenario; example profile x0=17940
+RT002,pair,F;G,E;H,2,645,1983,181000,6400,27000,27000,0.0,,,,,4002,rtrain,False,random scenario; example profile x0=14560
+RT003,pair,K;L,H;A,2,902,3262,212000,5100,27000,27000,0.0,,,,,4003,rtrain,False,random scenario
+RT004,single,L,K;A,1,790,2594,193000,6000,27000,27000,0.0,,,,,4004,rtrain,False,random scenario
+RT005,pair,G;H,F;K,2,817,3356,217000,4900,27000,27000,0.0,,,,,4005,rtrain,False,random scenario; example profile x0=26640
+RT006,pair,B;C,A;D,2,983,2164,172000,5500,27000,27000,0.0,,,,,4006,rtrain,False,random scenario
+RT007,pair,E;F,D;G,2,687,2485,207000,3300,27000,27000,0.0,,,,,4007,rtrain,False,random scenario
+RT008,single,F,E;G,1,646,3236,180000,5700,27000,27000,0.0,,,,,4008,rtrain,False,random scenario
+RT009,triple,A;B;C,L;D,3,626,3096,175000,4600,27000,27000,0.0,,,,,4009,rtrain,False,random scenario; example profile x0=2170
+RT010,single,F,E;G,1,762,1425,180000,4600,27000,27000,0.0,,,,,4010,rtrain,False,random scenario
+RT011,pair,K;L,H;A,2,687,2438,180000,4800,27000,27000,0.0,,,,,4011,rtrain,False,random scenario
+RT012,pair,A;B,L;C,2,743,2742,213000,5000,27000,27000,0.0,,,,,4012,rtrain,False,random scenario
+RT013,triple,B;C;D,A;E,3,1077,1537,184000,5400,27000,27000,0.0,,,,,4013,rtrain,False,random scenario
+RT014,pair,C;D,B;E,2,661,1162,175000,6000,27000,27000,0.0,,,,,4014,rtrain,False,random scenario
+RT015,triple,G;H;K,F;L,3,628,1062,180000,4100,27000,27000,0.0,,,,,4015,rtrain,False,random scenario; example profile x0=12360
+RT016,single,H,G;K,1,858,1887,190000,3800,27000,27000,0.0,,,,,4016,rtrain,False,random scenario
+RT017,single,E,D;F,1,909,1350,210000,6400,27000,27000,0.0,,,,,4017,rtrain,False,random scenario
+RT018,single,G,F;H,1,957,2891,180000,4100,27000,27000,0.0,,,,,4018,rtrain,False,random scenario
+RT019,pair,D;E,C;F,2,964,2878,209000,5600,27000,27000,0.0,,,,,4019,rtrain,False,random scenario
+RT020,single,F,E;G,1,963,3325,172000,5400,27000,27000,0.0,,,,,4020,rtrain,False,random scenario
+RT021,pair,A;B,L;C,2,877,2794,198000,4800,27000,27000,0.0,,,,,4021,rtrain,False,random scenario
+RT022,triple,K;L;A,H;B,3,629,3224,207000,5700,27000,27000,0.0,,,,,4022,rtrain,False,random scenario
+RT023,single,C,B;D,1,1085,2034,185000,3700,27000,27000,0.0,,,,,4023,rtrain,False,random scenario
+RT024,triple,G;H;K,F;L,3,827,2424,195000,3700,27000,27000,0.0,,,,,4024,rtrain,False,random scenario
+RT025,pair,G;H,F;K,2,893,3293,182000,4800,27000,27000,0.0,,,,,4025,rtrain,False,random scenario
+RT026,triple,F;G;H,E;K,3,813,1676,183000,3600,27000,27000,0.0,,,,,4026,rtrain,False,random scenario
+RT027,single,A,L;B,1,560,969,218000,3300,27000,27000,0.0,,,,,4027,rtrain,False,random scenario
+RT028,triple,L;A;B,K;C,3,988,2702,206000,4400,27000,27000,0.0,,,,,4028,rtrain,False,random scenario
+RT029,single,L,K;A,1,554,1847,189000,5700,27000,27000,0.0,,,,,4029,rtrain,False,random scenario
+RT030,triple,B;C;D,A;E,3,983,1713,210000,3300,27000,27000,0.0,,,,,4030,rtrain,False,random scenario
+RT031,triple,E;F;G,D;H,3,951,2143,191000,5400,27000,27000,0.0,,,,,4031,rtrain,False,random scenario
+RT032,triple,G;H;K,F;L,3,947,2682,185000,3400,27000,27000,0.0,,,,,4032,rtrain,False,random scenario
+RT033,triple,L;A;B,K;C,3,706,1912,181000,3200,27000,27000,0.0,,,,,4033,rtrain,False,random scenario
+RT034,single,C,B;D,1,736,1400,204000,4000,27000,27000,0.0,,,,,4034,rtrain,False,random scenario
+RT035,triple,L;A;B,K;C,3,923,2593,180000,6200,27000,27000,0.0,,,,,4035,rtrain,False,random scenario
+RT036,pair,D;E,C;F,2,652,2598,179000,4100,27000,27000,0.0,,,,,4036,rtrain,False,random scenario
+RT037,pair,C;D,B;E,2,1045,2666,193000,6000,27000,27000,0.0,,,,,4037,rtrain,False,random scenario
+RT038,single,C,B;D,1,806,1358,180000,3700,27000,27000,0.0,,,,,4038,rtrain,False,random scenario
+RT039,triple,L;A;B,K;C,3,1039,2944,176000,5000,27000,27000,0.0,,,,,4039,rtrain,False,random scenario
+RT040,pair,C;D,B;E,2,708,1349,218000,4000,27000,27000,0.0,,,,,4040,rtrain,False,random scenario
+RT041,triple,D;E;F,C;G,3,659,1141,185000,3100,27000,27000,0.0,,,,,4041,rtrain,False,random scenario; example profile x0=16690
+RT042,single,E,D;F,1,861,1820,217000,3400,27000,27000,0.0,,,,,4042,rtrain,False,random scenario
+RT043,single,K,H;L,1,1003,2310,196000,6000,27000,27000,0.0,,,,,4043,rtrain,False,random scenario; example profile x0=18520
+RT044,single,G,F;H,1,886,1801,194000,5200,27000,27000,0.0,,,,,4044,rtrain,False,random scenario
+RT045,pair,G;H,F;K,2,940,2227,191000,5500,27000,27000,0.0,,,,,4045,rtrain,False,random scenario
+RT046,pair,B;C,A;D,2,911,2498,194000,6000,27000,27000,0.0,,,,,4046,rtrain,False,random scenario
+RT047,triple,K;L;A,H;B,3,1050,3470,184000,6000,27000,27000,0.0,,,,,4047,rtrain,False,random scenario
+RT048,triple,C;D;E,B;F,3,595,2327,217000,5000,27000,27000,0.0,,,,,4048,rtrain,False,random scenario
+RT049,pair,G;H,F;K,2,597,1167,208000,3700,27000,27000,0.0,,,,,4049,rtrain,False,random scenario
+RT050,pair,F;G,E;H,2,812,3304,194000,4000,27000,27000,0.0,,,,,4050,rtrain,False,random scenario
+RT051,single,L,K;A,1,602,1141,191000,5300,27000,27000,0.0,,,,,4051,rtrain,False,random scenario; example profile x0=22870
+RT052,pair,B;C,A;D,2,973,2291,209000,3300,27000,27000,0.0,,,,,4052,rtrain,False,random scenario
+RT053,triple,F;G;H,E;K,3,932,3338,175000,4600,27000,27000,0.0,,,,,4053,rtrain,False,random scenario
+RT054,triple,L;A;B,K;C,3,1022,2158,183000,4300,27000,27000,0.0,,,,,4054,rtrain,False,random scenario
+RT055,pair,L;A,K;B,2,902,2481,173000,5400,27000,27000,0.0,,,,,4055,rtrain,False,random scenario
+RT056,pair,A;B,L;C,2,619,1306,206000,5600,27000,27000,0.0,,,,,4056,rtrain,False,random scenario; example profile x0=7850
+RT057,pair,K;L,H;A,2,845,2439,210000,4500,27000,27000,0.0,,,,,4057,rtrain,False,random scenario; example profile x0=15680
+RT058,triple,D;E;F,C;G,3,650,2562,201000,5500,27000,27000,0.0,,,,,4058,rtrain,False,random scenario
+RT059,single,A,L;B,1,614,2642,192000,5300,27000,27000,0.0,,,,,4059,rtrain,False,random scenario; example profile x0=20050
+RT060,triple,B;C;D,A;E,3,718,3173,175000,4300,27000,27000,0.0,,,,,4060,rtrain,False,random scenario
+RT061,triple,C;D;E,B;F,3,742,3254,194000,3700,27000,27000,0.0,,,,,4061,rtrain,False,random scenario; example profile x0=17480
+RT062,triple,K;L;A,H;B,3,1066,2872,183000,5600,27000,27000,0.0,,,,,4062,rtrain,False,random scenario
+RT063,pair,K;L,H;A,2,834,2201,174000,6000,27000,27000,0.0,,,,,4063,rtrain,False,random scenario
+RT064,pair,A;B,L;C,2,862,1969,171000,5400,27000,27000,0.0,,,,,4064,rtrain,False,random scenario
+RT065,triple,F;G;H,E;K,3,822,3250,213000,5500,27000,27000,0.0,,,,,4065,rtrain,False,random scenario
+RT066,triple,A;B;C,L;D,3,696,2920,190000,3300,27000,27000,0.0,,,,,4066,rtrain,False,random scenario
+RT067,triple,H;K;L,G;A,3,773,2383,170000,4200,27000,27000,0.0,,,,,4067,rtrain,False,random scenario
+RT068,single,D,C;E,1,712,3098,173000,5200,27000,27000,0.0,,,,,4068,rtrain,False,random scenario
+RT069,pair,A;B,L;C,2,686,1122,197000,4700,27000,27000,0.0,,,,,4069,rtrain,False,random scenario
+RT070,single,E,D;F,1,697,1568,200000,5200,27000,27000,0.0,,,,,4070,rtrain,False,random scenario
+RT071,triple,A;B;C,L;D,3,608,2899,183000,6300,27000,27000,0.0,,,,,4071,rtrain,False,random scenario; example profile x0=12690
+RT072,single,H,G;K,1,606,2444,192000,4200,27000,27000,0.0,,,,,4072,rtrain,False,random scenario
+RT073,single,C,B;D,1,824,1975,191000,6200,27000,27000,0.0,,,,,4073,rtrain,False,random scenario
+RT074,triple,B;C;D,A;E,3,673,2299,197000,3800,27000,27000,0.0,,,,,4074,rtrain,False,random scenario
+RT075,single,B,A;C,1,667,1685,203000,4000,27000,27000,0.0,,,,,4075,rtrain,False,random scenario
+RT076,triple,E;F;G,D;H,3,569,1150,206000,5900,27000,27000,0.0,,,,,4076,rtrain,False,random scenario
+RT077,pair,L;A,K;B,2,760,1204,208000,4100,27000,27000,0.0,,,,,4077,rtrain,False,random scenario
+RT078,triple,B;C;D,A;E,3,607,1410,193000,6000,27000,27000,0.0,,,,,4078,rtrain,False,random scenario
+RT079,pair,C;D,B;E,2,714,1213,188000,4300,27000,27000,0.0,,,,,4079,rtrain,False,random scenario
+RT080,single,G,F;H,1,634,2923,201000,5800,27000,27000,0.0,,,,,4080,rtrain,False,random scenario
+RT081,pair,E;F,D;G,2,668,2823,202000,5400,27000,27000,0.0,,,,,4081,rtrain,False,random scenario
+RT082,triple,G;H;K,F;L,3,590,1991,203000,3400,27000,27000,0.0,,,,,4082,rtrain,False,random scenario
+RT083,single,C,B;D,1,1091,2124,215000,3400,27000,27000,0.0,,,,,4083,rtrain,False,random scenario
+RT084,pair,B;C,A;D,2,710,1884,203000,3800,27000,27000,0.0,,,,,4084,rtrain,False,random scenario
+RT085,single,C,B;D,1,773,1735,173000,3500,27000,27000,0.0,,,,,4085,rtrain,False,random scenario
+RT086,pair,C;D,B;E,2,721,2120,210000,5900,27000,27000,0.0,,,,,4086,rtrain,False,random scenario
+RT087,triple,C;D;E,B;F,3,1057,2318,184000,5800,27000,27000,0.0,,,,,4087,rtrain,False,random scenario
+RT088,single,K,H;L,1,581,2426,195000,5300,27000,27000,0.0,,,,,4088,rtrain,False,random scenario
+RT089,single,L,K;A,1,707,1189,181000,4900,27000,27000,0.0,,,,,4089,rtrain,False,random scenario
+RT090,single,L,K;A,1,625,1420,203000,4500,27000,27000,0.0,,,,,4090,rtrain,False,random scenario
+RT091,triple,B;C;D,A;E,3,923,1853,212000,3200,27000,27000,0.0,,,,,4091,rtrain,False,random scenario
+RT092,triple,K;L;A,H;B,3,1063,3197,208000,4900,27000,27000,0.0,,,,,4092,rtrain,False,random scenario
+RT093,pair,H;K,G;L,2,571,1732,189000,5800,27000,27000,0.0,,,,,4093,rtrain,False,random scenario
+RT094,triple,A;B;C,L;D,3,991,1797,206000,3000,27000,27000,0.0,,,,,4094,rtrain,False,random scenario; example profile x0=19570
+RT095,triple,C;D;E,B;F,3,731,2172,171000,3600,27000,27000,0.0,,,,,4095,rtrain,False,random scenario
+RT096,pair,E;F,D;G,2,952,3138,175000,4900,27000,27000,0.0,,,,,4096,rtrain,False,random scenario
+RT097,pair,G;H,F;K,2,809,3314,175000,5000,27000,27000,0.0,,,,,4097,rtrain,False,random scenario
+RT098,single,E,D;F,1,936,2667,189000,6000,27000,27000,0.0,,,,,4098,rtrain,False,random scenario
+RT099,single,E,D;F,1,506,1315,177000,5200,27000,27000,0.0,,,,,4099,rtrain,False,random scenario
+RT100,pair,G;H,F;K,2,766,1388,216000,4700,27000,27000,0.0,,,,,4100,rtrain,False,random scenario
+RC001,triple,C;D;E,B;F,3,628,1308,207000,3800,27000,27000,0.0,,,,,4101,rcheck,False,random scenario; example profile x0=10980
+RC002,pair,K;L,H;A,2,724,1749,193000,6400,27000,27000,0.0,,,,,4102,rcheck,False,random scenario
+RC003,single,L,K;A,1,684,2809,190000,5400,27000,27000,0.0,,,,,4103,rcheck,False,random scenario
+RC004,pair,G;H,F;K,2,585,3097,211000,3200,27000,27000,0.0,,,,,4104,rcheck,False,random scenario
+RC005,triple,K;L;A,H;B,3,537,2166,211000,4900,27000,27000,0.0,,,,,4105,rcheck,False,random scenario
+RC006,pair,H;K,G;L,2,869,2357,178000,3000,27000,27000,0.0,,,,,4106,rcheck,False,random scenario
+RC007,pair,E;F,D;G,2,1067,2868,205000,3800,27000,27000,0.0,,,,,4107,rcheck,False,random scenario; example profile x0=19790
+RC008,pair,H;K,G;L,2,1056,1926,214000,5700,27000,27000,0.0,,,,,4108,rcheck,False,random scenario
+RC009,triple,L;A;B,K;C,3,894,1299,191000,4600,27000,27000,0.0,,,,,4109,rcheck,False,random scenario
+RC010,single,D,C;E,1,1080,2898,199000,4000,27000,27000,0.0,,,,,4110,rcheck,False,random scenario
+RC011,single,L,K;A,1,732,1288,208000,6200,27000,27000,0.0,,,,,4111,rcheck,False,random scenario
+RC012,triple,G;H;K,F;L,3,605,2991,211000,3800,27000,27000,0.0,,,,,4112,rcheck,False,random scenario
+RC013,pair,H;K,G;L,2,908,3240,210000,5100,27000,27000,0.0,,,,,4113,rcheck,False,random scenario; example profile x0=26650
+RC014,pair,F;G,E;H,2,983,2374,202000,4800,27000,27000,0.0,,,,,4114,rcheck,False,random scenario
+RC015,triple,A;B;C,L;D,3,754,3342,209000,3400,27000,27000,0.0,,,,,4115,rcheck,False,random scenario
+RC016,single,G,F;H,1,569,2022,183000,4300,27000,27000,0.0,,,,,4116,rcheck,False,random scenario
+RC017,triple,A;B;C,L;D,3,523,1890,197000,5700,27000,27000,0.0,,,,,4117,rcheck,False,random scenario
+RC018,triple,C;D;E,B;F,3,780,3051,180000,3800,27000,27000,0.0,,,,,4118,rcheck,False,random scenario
+RC019,pair,C;D,B;E,2,858,2360,193000,4900,27000,27000,0.0,,,,,4119,rcheck,False,random scenario
+RC020,triple,K;L;A,H;B,3,613,2467,183000,4700,27000,27000,0.0,,,,,4120,rcheck,False,random scenario
+RC021,triple,H;K;L,G;A,3,681,1962,199000,5600,27000,27000,0.0,,,,,4121,rcheck,False,random scenario; example profile x0=23620
+RC022,triple,H;K;L,G;A,3,1042,1501,210000,3800,27000,27000,0.0,,,,,4122,rcheck,False,random scenario
+RC023,single,E,D;F,1,721,1900,199000,3300,27000,27000,0.0,,,,,4123,rcheck,False,random scenario
+RC024,single,F,E;G,1,1066,1871,183000,6400,27000,27000,0.0,,,,,4124,rcheck,False,random scenario
+RC025,single,H,G;K,1,810,2049,210000,5600,27000,27000,0.0,,,,,4125,rcheck,False,random scenario
+RC026,pair,C;D,B;E,2,891,3183,207000,4500,27000,27000,0.0,,,,,4126,rcheck,False,random scenario; example profile x0=5540
+RC027,triple,L;A;B,K;C,3,815,1569,211000,4100,27000,27000,0.0,,,,,4127,rcheck,False,random scenario
+RC028,single,K,H;L,1,990,1886,192000,6300,27000,27000,0.0,,,,,4128,rcheck,False,random scenario
+RC029,single,B,A;C,1,688,2042,216000,4300,27000,27000,0.0,,,,,4129,rcheck,False,random scenario
+RC030,single,K,H;L,1,1072,3059,213000,5700,27000,27000,0.0,,,,,4130,rcheck,False,random scenario
+RC031,single,L,K;A,1,653,1555,194000,3200,27000,27000,0.0,,,,,4131,rcheck,False,random scenario
+RC032,triple,F;G;H,E;K,3,954,3091,181000,3900,27000,27000,0.0,,,,,4132,rcheck,False,random scenario
+RC033,triple,D;E;F,C;G,3,588,3014,189000,5600,27000,27000,0.0,,,,,4133,rcheck,False,random scenario
+RC034,single,F,E;G,1,1025,1624,186000,4100,27000,27000,0.0,,,,,4134,rcheck,False,random scenario; example profile x0=10520
+RC035,pair,L;A,K;B,2,798,1853,201000,5400,27000,27000,0.0,,,,,4135,rcheck,False,random scenario; example profile x0=490
+RC036,pair,K;L,H;A,2,840,1610,173000,5700,27000,27000,0.0,,,,,4136,rcheck,False,random scenario
+RC037,single,H,G;K,1,1044,2116,214000,3500,27000,27000,0.0,,,,,4137,rcheck,False,random scenario; example profile x0=1220
+RC038,single,B,A;C,1,671,2230,191000,5500,27000,27000,0.0,,,,,4138,rcheck,False,random scenario
+RC039,pair,E;F,D;G,2,605,2501,193000,4400,27000,27000,0.0,,,,,4139,rcheck,False,random scenario
+RC040,pair,G;H,F;K,2,561,1702,210000,4300,27000,27000,0.0,,,,,4140,rcheck,False,random scenario
+RC041,triple,K;L;A,H;B,3,610,2083,201000,5100,27000,27000,0.0,,,,,4141,rcheck,False,random scenario; example profile x0=3630
+RC042,single,A,L;B,1,528,2240,188000,6200,27000,27000,0.0,,,,,4142,rcheck,False,random scenario
+RC043,single,B,A;C,1,817,2545,194000,5200,27000,27000,0.0,,,,,4143,rcheck,False,random scenario
+RC044,triple,F;G;H,E;K,3,869,3119,190000,5800,27000,27000,0.0,,,,,4144,rcheck,False,random scenario
+RC045,single,L,K;A,1,964,1749,202000,4200,27000,27000,0.0,,,,,4145,rcheck,False,random scenario; example profile x0=3330
+RC046,single,B,A;C,1,1063,2081,206000,3200,27000,27000,0.0,,,,,4146,rcheck,False,random scenario; example profile x0=6120
+RC047,triple,H;K;L,G;A,3,1015,2213,181000,5900,27000,27000,0.0,,,,,4147,rcheck,False,random scenario
+RC048,pair,L;A,K;B,2,932,1844,200000,4100,27000,27000,0.0,,,,,4148,rcheck,False,random scenario
+RC049,pair,A;B,L;C,2,1027,2234,172000,6300,27000,27000,0.0,,,,,4149,rcheck,False,random scenario
+RC050,pair,F;G,E;H,2,1041,2369,200000,6100,27000,27000,0.0,,,,,4150,rcheck,False,random scenario
+RC051,single,D,C;E,1,1002,1661,215000,5700,27000,27000,0.0,,,,,4151,rcheck,False,random scenario; example profile x0=11090
+RC052,pair,K;L,H;A,2,885,2362,183000,6200,27000,27000,0.0,,,,,4152,rcheck,False,random scenario
+RC053,single,F,E;G,1,716,1433,199000,6400,27000,27000,0.0,,,,,4153,rcheck,False,random scenario
+RC054,pair,K;L,H;A,2,755,1672,208000,6000,27000,27000,0.0,,,,,4154,rcheck,False,random scenario
+RC055,triple,L;A;B,K;C,3,1085,1510,211000,5900,27000,27000,0.0,,,,,4155,rcheck,False,random scenario
+RC056,pair,E;F,D;G,2,508,2073,194000,6400,27000,27000,0.0,,,,,4156,rcheck,False,random scenario
+RC057,pair,C;D,B;E,2,776,1919,175000,4700,27000,27000,0.0,,,,,4157,rcheck,False,random scenario
+RC058,single,H,G;K,1,1049,3138,180000,6000,27000,27000,0.0,,,,,4158,rcheck,False,random scenario
+RC059,single,D,C;E,1,1082,3541,209000,4800,27000,27000,0.0,,,,,4159,rcheck,False,random scenario
+RC060,pair,L;A,K;B,2,619,2520,206000,4700,27000,27000,0.0,,,,,4160,rcheck,False,random scenario
+RF001,triple,K;L;A,H;B,3,997,2982,205000,4000,27000,27000,0.0,,,,,4161,rtest,False,random scenario
+RF002,triple,E;F;G,D;H,3,754,3352,209000,3300,27000,27000,0.0,,,,,4162,rtest,False,random scenario
+RF003,triple,H;K;L,G;A,3,587,2508,215000,5700,27000,27000,0.0,,,,,4163,rtest,False,random scenario
+RF004,triple,D;E;F,C;G,3,766,1936,192000,5400,27000,27000,0.0,,,,,4164,rtest,False,random scenario
+RF005,triple,L;A;B,K;C,3,790,2212,205000,3700,27000,27000,0.0,,,,,4165,rtest,False,random scenario
+RF006,pair,H;K,G;L,2,540,2082,203000,3800,27000,27000,0.0,,,,,4166,rtest,False,random scenario
+RF007,pair,H;K,G;L,2,1090,1596,173000,5400,27000,27000,0.0,,,,,4167,rtest,False,random scenario
+RF008,single,F,E;G,1,645,2770,181000,5000,27000,27000,0.0,,,,,4168,rtest,False,random scenario
+RF009,pair,K;L,H;A,2,696,1296,179000,4600,27000,27000,0.0,,,,,4169,rtest,False,random scenario
+RF010,triple,A;B;C,L;D,3,660,3117,177000,5200,27000,27000,0.0,,,,,4170,rtest,False,random scenario
+RF011,single,A,L;B,1,798,2712,215000,4700,27000,27000,0.0,,,,,4171,rtest,False,random scenario
+RF012,triple,K;L;A,H;B,3,806,1772,208000,5700,27000,27000,0.0,,,,,4172,rtest,False,random scenario
+RF013,pair,A;B,L;C,2,776,3183,184000,3300,27000,27000,0.0,,,,,4173,rtest,False,random scenario
+RF014,pair,H;K,G;L,2,816,2283,210000,3800,27000,27000,0.0,,,,,4174,rtest,False,random scenario
+RF015,pair,C;D,B;E,2,722,3197,202000,3400,27000,27000,0.0,,,,,4175,rtest,False,random scenario
+RF016,pair,F;G,E;H,2,708,1722,170000,6100,27000,27000,0.0,,,,,4176,rtest,False,random scenario
+RF017,triple,A;B;C,L;D,3,808,1668,190000,6100,27000,27000,0.0,,,,,4177,rtest,False,random scenario; example profile x0=6950
+RF018,triple,E;F;G,D;H,3,627,1944,184000,6000,27000,27000,0.0,,,,,4178,rtest,False,random scenario
+RF019,single,A,L;B,1,936,3438,203000,4000,27000,27000,0.0,,,,,4179,rtest,False,random scenario
+RF020,triple,L;A;B,K;C,3,814,2029,181000,3200,27000,27000,0.0,,,,,4180,rtest,False,random scenario
+RF021,pair,F;G,E;H,2,966,1877,193000,3200,27000,27000,0.0,,,,,4181,rtest,False,random scenario
+RF022,triple,A;B;C,L;D,3,892,2952,192000,6000,27000,27000,0.0,,,,,4182,rtest,False,random scenario; example profile x0=18910
+RF023,pair,K;L,H;A,2,1050,1839,205000,6100,27000,27000,0.0,,,,,4183,rtest,False,random scenario
+RF024,pair,L;A,K;B,2,916,3254,170000,5400,27000,27000,0.0,,,,,4184,rtest,False,random scenario
+RF025,pair,G;H,F;K,2,980,2066,208000,6000,27000,27000,0.0,,,,,4185,rtest,False,random scenario
+RF026,pair,G;H,F;K,2,840,2079,179000,6000,27000,27000,0.0,,,,,4186,rtest,False,random scenario
+RF027,pair,D;E,C;F,2,829,2494,186000,4900,27000,27000,0.0,,,,,4187,rtest,False,random scenario
+RF028,pair,K;L,H;A,2,976,1605,178000,4700,27000,27000,0.0,,,,,4188,rtest,False,random scenario
+RF029,triple,G;H;K,F;L,3,597,1982,203000,3400,27000,27000,0.0,,,,,4189,rtest,False,random scenario
+RF030,triple,G;H;K,F;L,3,1012,2272,188000,5900,27000,27000,0.0,,,,,4190,rtest,False,random scenario
+RF031,pair,C;D,B;E,2,934,1991,177000,4700,27000,27000,0.0,,,,,4191,rtest,False,random scenario; example profile x0=10460
+RF032,triple,K;L;A,H;B,3,895,3277,191000,5400,27000,27000,0.0,,,,,4192,rtest,False,random scenario
+RF033,single,A,L;B,1,601,2371,184000,6400,27000,27000,0.0,,,,,4193,rtest,False,random scenario
+RF034,pair,G;H,F;K,2,765,1579,218000,6000,27000,27000,0.0,,,,,4194,rtest,False,random scenario; example profile x0=7350
+RF035,single,D,C;E,1,1091,3459,203000,5300,27000,27000,0.0,,,,,4195,rtest,False,random scenario
+RF036,single,K,H;L,1,596,2681,194000,4100,27000,27000,0.0,,,,,4196,rtest,False,random scenario
+RF037,pair,D;E,C;F,2,880,2867,202000,4100,27000,27000,0.0,,,,,4197,rtest,False,random scenario
+RF038,pair,K;L,H;A,2,530,1219,203000,4400,27000,27000,0.0,,,,,4198,rtest,False,random scenario
+RF039,triple,C;D;E,B;F,3,980,1928,174000,5700,27000,27000,0.0,,,,,4199,rtest,False,random scenario
+RF040,triple,G;H;K,F;L,3,622,1856,173000,4700,27000,27000,0.0,,,,,4200,rtest,False,random scenario
+RF041,pair,L;A,K;B,2,951,3227,179000,6100,27000,27000,0.0,,,,,4201,rtest,False,random scenario
+RF042,single,D,C;E,1,515,3092,217000,6300,27000,27000,0.0,,,,,4202,rtest,False,random scenario
+RF043,single,G,F;H,1,739,1954,205000,5900,27000,27000,0.0,,,,,4203,rtest,False,random scenario
+RF044,pair,L;A,K;B,2,821,1671,180000,4600,27000,27000,0.0,,,,,4204,rtest,False,random scenario
+RF045,pair,E;F,D;G,2,988,2747,178000,5600,27000,27000,0.0,,,,,4205,rtest,False,random scenario
+RF046,single,D,C;E,1,574,1337,193000,4700,27000,27000,0.0,,,,,4206,rtest,False,random scenario
+RF047,pair,G;H,F;K,2,958,1985,200000,4400,27000,27000,0.0,,,,,4207,rtest,False,random scenario
+RF048,triple,D;E;F,C;G,3,961,2445,188000,5900,27000,27000,0.0,,,,,4208,rtest,False,random scenario
+RF049,triple,G;H;K,F;L,3,669,3001,208000,4700,27000,27000,0.0,,,,,4209,rtest,False,random scenario
+RF050,single,F,E;G,1,1071,2222,186000,6400,27000,27000,0.0,,,,,4210,rtest,False,random scenario
+RF051,triple,B;C;D,A;E,3,557,2520,198000,3500,27000,27000,0.0,,,,,4211,rtest,False,random scenario
+RF052,single,K,H;L,1,827,1883,204000,3600,27000,27000,0.0,,,,,4212,rtest,False,random scenario; example profile x0=21330
+RF053,single,G,F;H,1,991,2860,199000,6000,27000,27000,0.0,,,,,4213,rtest,False,random scenario
+RF054,pair,H;K,G;L,2,667,1658,201000,4000,27000,27000,0.0,,,,,4214,rtest,False,random scenario
+RF055,single,H,G;K,1,842,3182,193000,3300,27000,27000,0.0,,,,,4215,rtest,False,random scenario
+RF056,pair,D;E,C;F,2,815,1522,173000,3400,27000,27000,0.0,,,,,4216,rtest,False,random scenario; example profile x0=18840
+RF057,pair,C;D,B;E,2,916,2347,215000,3100,27000,27000,0.0,,,,,4217,rtest,False,random scenario
+RF058,single,E,D;F,1,503,2770,216000,6100,27000,27000,0.0,,,,,4218,rtest,False,random scenario
+RF059,single,A,L;B,1,723,1358,214000,3500,27000,27000,0.0,,,,,4219,rtest,False,random scenario
+RF060,triple,L;A;B,K;C,3,929,3326,187000,4200,27000,27000,0.0,,,,,4220,rtest,False,random scenario
+RZ01,single,D,C;E,1,790,1245,202000,3200,27000,27000,0.0,,,,,4221,rtrain,True,random scenario; example profile x0=13900; reserve for rtrain: use only if a scenario of that set does not collapse
+RZ02,single,C,B;D,1,614,2767,195000,5700,27000,27000,0.0,,,,,4222,rtrain,True,random scenario; example profile x0=9900; reserve for rtrain: use only if a scenario of that set does not collapse
+RZ03,pair,C;D,B;E,2,527,2655,194000,6400,27000,27000,0.0,,,,,4223,rtrain,True,random scenario; reserve for rtrain: use only if a scenario of that set does not collapse
+RZ04,pair,B;C,A;D,2,1014,3596,205000,6400,27000,27000,0.0,,,,,4224,rtrain,True,random scenario; reserve for rtrain: use only if a scenario of that set does not collapse
+RZ05,single,E,D;F,1,563,2258,171000,6100,27000,27000,0.0,,,,,4225,rtrain,True,random scenario; reserve for rtrain: use only if a scenario of that set does not collapse
+RZ06,pair,F;G,E;H,2,915,2699,181000,5600,27000,27000,0.0,,,,,4226,rtrain,True,random scenario; reserve for rtrain: use only if a scenario of that set does not collapse
+RZ07,single,E,D;F,1,702,1599,182000,5600,27000,27000,0.0,,,,,4227,rtrain,True,random scenario; example profile x0=22430; reserve for rtrain: use only if a scenario of that set does not collapse
+RZ08,pair,E;F,D;G,2,640,1167,209000,5000,27000,27000,0.0,,,,,4228,rtrain,True,random scenario; example profile x0=20380; reserve for rtrain: use only if a scenario of that set does not collapse
+RZ09,triple,L;A;B,K;C,3,610,1043,213000,3900,27000,27000,0.0,,,,,4229,rtrain,True,random scenario; reserve for rtrain: use only if a scenario of that set does not collapse
+RZ10,triple,L;A;B,K;C,3,660,1813,196000,6000,27000,27000,0.0,,,,,4230,rtrain,True,random scenario; reserve for rtrain: use only if a scenario of that set does not collapse
+RZ11,pair,D;E,C;F,2,735,2553,212000,5600,27000,27000,0.0,,,,,4231,rcheck,True,random scenario; reserve for rcheck: use only if a scenario of that set does not collapse
+RZ12,pair,G;H,F;K,2,1077,1969,204000,4900,27000,27000,0.0,,,,,4232,rcheck,True,random scenario; reserve for rcheck: use only if a scenario of that set does not collapse
+RZ13,triple,H;K;L,G;A,3,776,3135,171000,6200,27000,27000,0.0,,,,,4233,rcheck,True,random scenario; reserve for rcheck: use only if a scenario of that set does not collapse
+RZ14,single,D,C;E,1,702,3091,199000,6100,27000,27000,0.0,,,,,4234,rcheck,True,random scenario; reserve for rcheck: use only if a scenario of that set does not collapse
+RZ15,triple,A;B;C,L;D,3,1071,3568,214000,3200,27000,27000,0.0,,,,,4235,rcheck,True,random scenario; reserve for rcheck: use only if a scenario of that set does not collapse
+RZ16,pair,C;D,B;E,2,778,1311,196000,5900,27000,27000,0.0,,,,,4236,rcheck,True,random scenario; reserve for rcheck: use only if a scenario of that set does not collapse
+RZ17,pair,B;C,A;D,2,628,2256,209000,5100,27000,27000,0.0,,,,,4237,rtest,True,random scenario; example profile x0=11470; reserve for rtest: use only if a scenario of that set does not collapse
+RZ18,single,A,L;B,1,957,1882,172000,3400,27000,27000,0.0,,,,,4238,rtest,True,random scenario; reserve for rtest: use only if a scenario of that set does not collapse
+RZ19,pair,H;K,G;L,2,1014,1970,203000,6200,27000,27000,0.0,,,,,4239,rtest,True,random scenario; example profile x0=11130; reserve for rtest: use only if a scenario of that set does not collapse
+RZ20,triple,E;F;G,D;H,3,682,1566,172000,3000,27000,27000,0.0,,,,,4240,rtest,True,random scenario; reserve for rtest: use only if a scenario of that set does not collapse
+RZ21,single,C,B;D,1,786,1733,212000,5200,27000,27000,0.0,,,,,4241,rtest,True,random scenario; example profile x0=8410; reserve for rtest: use only if a scenario of that set does not collapse
+RZ22,triple,H;K;L,G;A,3,516,2644,188000,3600,27000,27000,0.0,,,,,4242,rtest,True,random scenario; reserve for rtest: use only if a scenario of that set does not collapse
