@@ -11,7 +11,37 @@ Offset +5 = margin 0.  Each panel is one single simulation.
 """
 import argparse, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import numpy as np
+import make_slide_graphs as g
 import make_sensor_graphs as m
+
+# After a collapse the run has failed, so nothing after it is worth showing. Every curve (all bus voltages, dashed
+# "load asked for", solid "load the bus got") stops STOP_AFTER seconds after the last collapse onset in that panel.
+# The time axis stays the full 5000 s so the panels of one figure remain comparable. Safe runs are not touched.
+STOP_AFTER = 3
+
+def stop_at_collapse(df):
+    coll = g.collapsed_buses(df)
+    if not coll:
+        return df
+    end = max(coll.values()) + STOP_AFTER
+    df = df.copy()
+    late = df["time_s"].values > end
+    for c in df.columns:
+        if c != "time_s":
+            df.loc[late, c] = np.nan
+    return df
+
+_trace = m.trace
+m.trace = lambda d, sid, tag: stop_at_collapse(_trace(d, sid, tag))
+
+_draw_load = m.draw_load
+def draw_load(ax, df, coll, show_ylabel=True):
+    _draw_load(ax, df, coll, show_ylabel)
+    for t in ax.texts:                       # the orange note in the load panel
+        if "stop" in t.get_text():
+            t.set_text("lines stop:\nbus collapsed" if len(coll) == 1 else "lines stop:\nbuses collapsed")
+m.draw_load = draw_load
 
 NOISE = "10% noise, 1 s average"
 
