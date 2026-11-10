@@ -35,13 +35,14 @@ def stop_at_collapse(df):
 _trace = m.trace
 m.trace = lambda d, sid, tag: stop_at_collapse(_trace(d, sid, tag))
 
-_draw_load = m.draw_load
-def draw_load(ax, df, coll, show_ylabel=True):
-    _draw_load(ax, df, coll, show_ylabel)
-    for t in ax.texts:                       # the orange note in the load panel
-        if "stop" in t.get_text():
-            t.set_text("lines stop:\nbus collapsed" if len(coll) == 1 else "lines stop:\nbuses collapsed")
-m.draw_load = draw_load
+if hasattr(m, "draw_load"):                  # newer make_sensor_graphs.py: reword the orange note in the load panel
+    _draw_load = m.draw_load
+    def draw_load(ax, df, coll, show_ylabel=True):
+        _draw_load(ax, df, coll, show_ylabel)
+        for t in ax.texts:
+            if "stop" in t.get_text():
+                t.set_text("lines stop:\nbus collapsed" if len(coll) == 1 else "lines stop:\nbuses collapsed")
+    m.draw_load = draw_load
 
 NOISE = "10% noise, 1 s average"
 
