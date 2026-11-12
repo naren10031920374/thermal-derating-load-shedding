@@ -34,6 +34,8 @@
 #   MEAS_PERIOD=1     sensor sample period in seconds (default 1).  MEAS_SEED=1  noise seed (default 1).
 #   MEAS_MODE=uniform shape of the random error (default gauss). gauss: MEAS_NOISE is a standard deviation.
 #                     uniform: MEAS_NOISE is a bound, every reading is within +/- MEAS_NOISE percent.
+#   MEAS_ABS_W=2400   fixed-size noise in watts added to every reading (Normal, standard deviation 2400 W = 3 A at 800 V).
+#                     The size does not depend on the load. Can be used alone or with MEAS_NOISE.
 #                     Use a different TAG for every setting. submit_noise_delay.sh submits the whole set.
 #   Examples:
 #     sbatch --array=12,13,14,19,20,24,32,34,35%3 --export=ALL,STAGED=1,TAG=staged  scripts/09_dataset_pipeline/run_staged_array.sh
@@ -71,6 +73,7 @@ if [ -n "${MEAS_PERIOD:-}" ];  then add_opt "'meas_period_s', ${MEAS_PERIOD}"; f
 if [ -n "${MEAS_SEED:-}" ];    then add_opt "'meas_seed', ${MEAS_SEED}"; fi
 if [ -n "${MEAS_FILTER:-}" ];  then add_opt "'meas_filter_s', ${MEAS_FILTER}"; fi
 if [ -n "${MEAS_MODE:-}" ];    then add_opt "'meas_noise_mode', '${MEAS_MODE}'"; fi
+if [ -n "${MEAS_ABS_W:-}" ];   then add_opt "'meas_noise_abs_w', ${MEAS_ABS_W}"; fi
 OPTS="struct(${OPTS_LIST})"
 echo "Options: ${OPTS}"
 

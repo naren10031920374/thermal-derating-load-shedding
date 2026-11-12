@@ -51,6 +51,9 @@ function result = run_staged_limiter(scenario, opts)
 %    meas_noise_mode  default 'gauss'. Shape of the random error (the size is meas_noise_pct):
 %                     'gauss'   e ~ Normal(0, pct/100): pct is a standard deviation, single readings can be larger.
 %                     'uniform' e ~ Uniform(-pct/100, +pct/100): pct is a BOUND, no reading is off by more than pct.
+%    meas_noise_abs_w default 0. MEASUREMENT TEST: FIXED-SIZE noise in watts, added to every reading:
+%                     reading = load + abs_w * e, e ~ Normal(0, 1). The size does not depend on the load
+%                     (e.g. 3 A at 800 V = 2400 W). Can be used alone or together with meas_noise_pct.
 %    meas_seed        default 1. Seed of the noise (each limited bus gets seed+k, so buses differ).
 %    meas_filter_s    default 0. MEASUREMENT TEST: the limiter averages the readings of the last meas_filter_s seconds
 %                     (a causal moving average, applied after delay and noise). 0 = no filter.
@@ -108,7 +111,8 @@ function result = run_staged_limiter(scenario, opts)
     if ~any(strcmp(MEAS_MODE, {'gauss', 'uniform'}))
         error('run_staged_limiter:badNoiseMode', 'meas_noise_mode must be ''gauss'' or ''uniform'', got ''%s''', char(string(MEAS_MODE)));
     end
-    MEAS_ON   = MEAS_D > 0 || MEAS_N > 0 || MEAS_F > 0;
+    MEAS_A    = get_opt(opts, 'meas_noise_abs_w', 0);
+    MEAS_ON   = MEAS_D > 0 || MEAS_N > 0 || MEAS_F > 0 || MEAS_A > 0;
     SAVE_TRACE = get_opt(opts, 'save_trace', false);
 
     %% 1. Scenario row, caps, earlier-step outputs ---------------------------
@@ -179,9 +183,10 @@ function result = run_staged_limiter(scenario, opts)
     result.meas_seed = MEAS_SEED;
     result.meas_filter_s = MEAS_F;
     result.meas_noise_mode = MEAS_MODE;
+    result.meas_noise_abs_w = MEAS_A;
     if MEAS_ON
-        fprintf('MEASUREMENT TEST: limiter sees the load with delay %g s, noise %g %% (%s), period %g s, seed %d, moving average %g s\n', ...
-                MEAS_D, MEAS_N, MEAS_MODE, MEAS_P, MEAS_SEED, MEAS_F);
+        fprintf('MEASUREMENT TEST: limiter sees the load with delay %g s, noise %g %% (%s), fixed noise %g W, period %g s, seed %d, moving average %g s\n', ...
+                MEAS_D, MEAS_N, MEAS_MODE, MEAS_A, MEAS_P, MEAS_SEED, MEAS_F);
     end
 
     if ~any(ct_collapsed)
@@ -267,7 +272,7 @@ function result = run_staged_limiter(scenario, opts)
                 && ((~isfield(prev, 'tend') && TEND == 5000) || (isfield(prev, 'tend') && prev.tend == TEND)) ...
                 && get_opt(prev, 'meas_delay_s', 0) == MEAS_D && get_opt(prev, 'meas_noise_pct', 0) == MEAS_N ...
                 && get_opt(prev, 'meas_period_s', 1) == MEAS_P && get_opt(prev, 'meas_seed', 1) == MEAS_SEED && get_opt(prev, 'meas_filter_s', 0) == MEAS_F ...
-                && strcmp(get_opt(prev, 'meas_noise_mode', 'gauss'), MEAS_MODE)
+                && strcmp(get_opt(prev, 'meas_noise_mode', 'gauss'), MEAS_MODE) && get_opt(prev, 'meas_noise_abs_w', 0) == MEAS_A
             for q = 1:numel(prev.iterations)
                 if iscell(prev.iterations)
                     iters{end+1} = prev.iterations{q}; %#ok<AGROW>
@@ -386,7 +391,7 @@ function result = run_staged_limiter(scenario, opts)
                     else
                         capv = cap_w * ones(N_STEPS, 1);
                     end
-                    mload = measure_load(load_hist(:, col), MEAS_D, MEAS_N, MEAS_P, MEAS_SEED + kk, TS, MEAS_F, MEAS_MODE);
+                    mload = measure_load(load_hist(:, col), MEAS_D, MEAS_N, MEAS_P, MEAS_SEED + kk, TS, MEAS_F, MEAS_MODE, MEAS_A);
                     fac = min(1, capv ./ max(mload, 1));
                     load_run(idx, col) = load_hist(idx, col) .* fac(idx);
                 elseif STAGED
@@ -468,7 +473,7 @@ function result = run_staged_limiter(scenario, opts)
         end
         s = struct('scenario_id', id, 'shed_buses', {shed_bus}, ...
                    'trigger_time_by_bus', trig_time, 'bus_order', {BUS}, 'iterations', {iters}, 'tend', TEND, ...
-                   'meas_delay_s', MEAS_D, 'meas_noise_pct', MEAS_N, 'meas_period_s', MEAS_P, 'meas_seed', MEAS_SEED, 'meas_filter_s', MEAS_F, 'meas_noise_mode', MEAS_MODE);
+                   'meas_delay_s', MEAS_D, 'meas_noise_pct', MEAS_N, 'meas_period_s', MEAS_P, 'meas_seed', MEAS_SEED, 'meas_filter_s', MEAS_F, 'meas_noise_mode', MEAS_MODE, 'meas_noise_abs_w', MEAS_A);
         write_json(iter_path, s);
     end
 end
@@ -506,11 +511,12 @@ function row = get_row(tbl, scenario)
 end
 
 
-function m = measure_load(x, delay_s, noise_pct, period_s, seed, ts, filter_s, mode)
+function m = measure_load(x, delay_s, noise_pct, period_s, seed, ts, filter_s, mode, abs_w)
 % What a sensor would report for the load column x (one value per simulation step ts):
 % a reading is taken every period_s and held until the next one, it arrives delay_s late,
 % and it carries a multiplicative random error of noise_pct percent (one draw per reading):
 % mode 'gauss' (default) = Normal with standard deviation noise_pct; mode 'uniform' = Uniform(-noise_pct, +noise_pct), a bound.
+% abs_w > 0 adds a fixed-size Normal error of abs_w watts on top (independent of the load).
 % If filter_s > 0 the limiter then uses the average of the readings of the last filter_s seconds.
     n = numel(x);
     step = max(1, round(period_s / ts));
@@ -527,6 +533,13 @@ function m = measure_load(x, delay_s, noise_pct, period_s, seed, ts, filter_s, m
             e = randn(rs, nS, 1);
         end
         m = m .* max(0, 1 + (noise_pct / 100) * e((src - 1) / step + 1));
+    end
+    if nargin >= 9 && abs_w > 0
+        % fixed-size noise in watts (one draw per reading, own random stream so it does not change the percent noise)
+        nS = ceil(n / step) + 1;
+        rs2 = RandStream('mt19937ar', 'Seed', seed + 500000);
+        e2 = randn(rs2, nS, 1);
+        m = max(0, m + abs_w * e2((src - 1) / step + 1));
     end
     if nargin >= 7 && filter_s > 0
         L = max(1, round(filter_s / ts));                    % window length in simulation steps
